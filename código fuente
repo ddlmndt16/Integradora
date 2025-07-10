@@ -1,0 +1,226 @@
+import tkinter as tk
+
+# crear la ventana de Acceso
+ventana = tk.Tk()
+
+# título de la ventana
+ventana.title("Estudio-VLSM")
+ventana.geometry("1200x700")
+ventana.configure(bg= "#A1AFF7")
+
+def mostrar_ventana2():
+    ventana2.deiconify()
+    ventana.withdraw()
+
+
+frame1 = tk.Frame(ventana, bg= "#687EF4", width=300)
+frame4 = tk.Frame(ventana, bg= "#687EF4", width=300)
+frame3 = tk.Frame(ventana, bg= "#3B05C4", width=700, height=50)
+
+
+# añadir los frames a la ventana usando pack() con fill, side y expand
+frame1.pack(fill=tk.Y, side=tk.LEFT, expand= True)
+frame4.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
+frame3.pack(fill=tk.X)
+
+
+#Etiquetas
+label_usuario = tk.Label(ventana,text="Nombre de Usuario", font=("Roboto",13), bg="#A1AFF7", fg="white")
+label_correo = tk.Label(ventana,text="Correo electronico", font=("Roboto",13), bg="#A1AFF7", fg="white")
+label_edad = tk.Label(ventana,text="Fecha de nacimiento", font=("Roboto",13), bg="#A1AFF7", fg="white")
+
+#Entradas
+entrada_usuario = tk.Entry(ventana,width=30)
+entrada_correo = tk.Entry(ventana,width=30)
+entrada_edad = tk.Entry(ventana,width=30)
+
+#Empaquetando las etiquetas y entradas
+label_usuario.pack(pady=5, padx=200)
+entrada_usuario.pack(pady=5, padx=200)
+label_correo.pack(pady=5, padx=10)
+entrada_correo.pack(pady=5, padx=20)
+label_edad.pack(pady=5, padx=10)
+entrada_edad.pack(pady=5, padx=20)
+
+boton_guardar = tk.Button(ventana,command=mostrar_ventana2, text="Registarse", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2)
+boton_guardar.pack(pady=30)
+
+# Ventana 2
+ventana2 = tk.Toplevel(ventana)
+ventana2.title("Estudio-VLSM")
+ventana2.geometry("1200x700")
+ventana2.configure(bg="#FFFFFF")
+
+def mostrar_ventana3():
+    ventana3.deiconify()
+    ventana2.withdraw()
+
+def mostrar_ventana4():
+    ventana4.deiconify()
+    ventana2.withdraw()
+
+def mostrar_ventana5():
+    ventana5.deiconify()
+    ventana2.withdraw()
+
+def mostrar_Perfil():
+    Perfil.deiconify()
+    ventana2.withdraw()
+
+
+Barra_superio = tk.Frame(ventana2, bg= "#3B05C4", width=700, height=80)
+Barra_superio.pack(fill=tk.X)
+
+Configuracion = tk.Button(Barra_superio, text="Ajustes", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2,command=mostrar_Perfil)
+Configuracion.grid(row=0, column=4, padx=1070)
+
+Barra_superio = tk.Frame(ventana2, bg= "#FFFFFF", width=700, height=150)
+label_Titulo= tk.Label(ventana2, text="EJERCICIOS", font=("Times New Roman", 30), bg="#FFFFFF", fg="black")
+label_Titulo.pack(pady=20, padx=200)
+Barra_superio.pack(fill=tk.X)
+
+Etiqueta1_V2 = tk.Frame(ventana2, bg= "#FFFFFF")
+Etiqueta1_V2.pack(pady=40)
+
+#Etiquetas2 
+label_Ejercicio1 = tk.Label(Etiqueta1_V2, text="VLSM", font=("Roboto", 30), bg="#FFFFFF", fg="black")
+label_Ejercicio2 = tk.Label(Etiqueta1_V2, text="Tablas de direccionamiento", font=("Roboto", 30), bg="#FFFFFF", fg="black")
+label_Ejercicio3 = tk.Label(Etiqueta1_V2, text="Configuración de un Router", font=("Roboto", 30), bg="#FFFFFF", fg="black")
+
+
+#Entradas2
+Ejercicio1 = tk.Button(Etiqueta1_V2, text="Abrir", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana3)
+Ejercicio2 = tk.Button(Etiqueta1_V2, text="Abrir", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana4)
+Ejercicio3 = tk.Button(Etiqueta1_V2, text="Abrir", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana5)
+
+#Empaquetando las etiquetas y entradas
+
+label_Ejercicio1.grid(row=0, column=1, pady=15, padx=200)
+Ejercicio1.grid(row=0, column=2, pady=10, padx=10)
+
+label_Ejercicio2.grid(row=1, column=1, pady=15, padx=200)
+Ejercicio2.grid(row=1, column=2, pady=10, padx=10)
+
+label_Ejercicio3.grid(row=2, column=1, pady=15, padx=20)
+Ejercicio3.grid(row=2, column=2, pady=10, padx=10)
+
+Etiqueta1_V2.pack(fill=tk.X)
+Etiqueta1_V2.pack(padx=10, pady=10)
+
+#Creando la ventana de ajustes
+Perfil = tk.Toplevel(ventana2)
+Perfil.title("Estudio-VLSM")
+Perfil.geometry("1200x700")
+Perfil.configure(bg= "#A1AFF7")
+
+
+frame1 = tk.Frame(Perfil, bg= "#687EF4", width=300)
+frame4 = tk.Frame(Perfil, bg= "#687EF4", width=300)
+frame3 = tk.Frame(Perfil, bg= "#3B05C4", width=700, height=50)
+
+
+# añadir los frames a la ventana usando pack() con fill, side y expand
+frame1.pack(fill=tk.Y, side=tk.LEFT,expand=True)
+frame4.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
+frame3.pack(fill=tk.X,side=tk.TOP)
+
+
+#Etiquetas
+label_usuario = tk.Label(Perfil,text="Cambiar Nombre ", font=("Roboto",15), bg="#A1AFF7", fg="white")
+label_correo = tk.Label(Perfil,text="Cambiar Correo", font=("Roboto",15), bg="#A1AFF7", fg="white")
+
+#Entradas
+entrada_usuario = tk.Entry(Perfil,width=30,font=(18))
+entrada_correo = tk.Entry(Perfil,width=30,font=(18))
+
+#Empaquetando las etiquetas y entradas
+label_usuario.pack(pady=5, padx=200)
+entrada_usuario.pack(pady=5, padx=20)
+label_correo.pack(pady=5, padx=10)
+entrada_correo.pack(pady=5, padx=20)
+
+
+Cambiar = tk.Button(Perfil,text="Guardar", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana2)
+Cambiar.pack(pady=30)
+
+
+# Ventana 3
+ventana3 = tk.Toplevel(ventana2)
+ventana3.title("Estudio-VLSM")
+ventana3.geometry("1200x700")
+ventana3.configure(bg="#FFFFFF")
+
+def mostrar_Principal():
+    ventana2.deiconify()
+    ventana3.withdraw()
+
+# Barra superior
+Barra_superior2 = tk.Frame(ventana3, bg="#3B05C4", height=20)
+Barra_superior2.pack(fill=tk.X)
+
+
+# Título centrado
+label_Titulo2 = tk.Label(Barra_superior2, text="EJERCICIO VLSM", font=("Times New Roman", 30), bg="#3B05C4", fg="black")
+label_Titulo2.grid(row=0, column=4,padx= 300)
+# Botón a la izquierda
+Regreso = tk.Button(Barra_superior2, text="Regresar", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2, command=mostrar_Principal)
+Regreso.grid(row=0, column=0, pady=5)
+
+#Etiqueta
+Etiqueta1_V3 = tk.Frame(ventana3, bg="#FFFFFF")
+Etiqueta1_V3.pack(pady=40, fill=tk.X, padx=10)
+
+# Ventana 4
+ventana4 = tk.Toplevel(ventana2)
+ventana4.title("Estudio-VLSM")
+ventana4.geometry("1200x700")
+ventana4.configure(bg="#FFFFFF")
+
+def mostrar_Principal():
+    ventana2.deiconify()
+    ventana4.withdraw()
+
+# Barra superior
+Barra_superior3 = tk.Frame(ventana4, bg="#3B05C4", height=70)
+Barra_superior3.pack(fill=tk.X)
+
+
+# Título centrado
+label_Titulo3 = tk.Label(Barra_superior3, text="Tablas de direccionamiento", font=("Times New Roman", 39), bg="#3B05C4", fg="black")
+label_Titulo3.grid(row=0, column=3,padx= 200)
+# Botón a la izquierda
+Boton_Regreso = tk.Button(Barra_superior3, text="Regresar", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2, command=mostrar_Principal)
+Boton_Regreso.grid(row=0, column=0, pady=5)
+
+#Etiqueta
+Etiqueta1_V4 = tk.Frame(ventana4, bg="#FFFFFF")
+Etiqueta1_V4.pack(pady=40, fill=tk.X, padx=10)
+
+# Ventana 5
+ventana5 = tk.Toplevel(ventana2)
+ventana5.title("Estudio-VLSM")
+ventana5.geometry("1200x700")
+ventana5.configure(bg="#FFFFFF")
+
+def mostrar_Principal():
+    ventana2.deiconify()
+    ventana5.withdraw()
+
+# Barra superior
+Barra_superior4 = tk.Frame(ventana5, bg="#3B05C4", height=70)
+Barra_superior4.pack(fill=tk.X)
+
+
+# Título centrado
+label_Titulo4 = tk.Label(Barra_superior4, text="Configuración de un Router", font=("Times New Roman", 39), bg="#3B05C4", fg="black")
+label_Titulo4.grid(row=0, column=3,padx= 200)
+# Botón a la izquierda
+Boton_Regreso = tk.Button(Barra_superior4, text="Regresar", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2, command=mostrar_Principal)
+Boton_Regreso.grid(row=0, column=0, pady=5)
+
+#Etiqueta
+Etiqueta1_V5 = tk.Frame(ventana5, bg="#FFFFFF")
+Etiqueta1_V5.pack(pady=40, fill=tk.X, padx=10)
+
+# iniciar el bucle de eventos
+ventana.mainloop()

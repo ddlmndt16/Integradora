@@ -1,3 +1,6 @@
+# Cambios en la rama código fuente
+# Este código crea una interfaz gráfica de usuario (GUI) utilizando tkinter en Python.
+
 import tkinter as tk
 
 # crear la ventana de Acceso
@@ -13,7 +16,7 @@ def mostrar_ventana2():
     ventana.withdraw()
 
 
-frame1 = tk.Frame(ventana, bg= "#687EF4", width=300)
+frame1 = tk.Frame(ventana, bg= "#688EF4", width=300)
 frame4 = tk.Frame(ventana, bg= "#687EF4", width=300)
 frame3 = tk.Frame(ventana, bg= "#3B05C4", width=700, height=50)
 

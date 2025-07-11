@@ -26,7 +26,6 @@ El usuario cuenta también con una sección dedicada a su perfil, donde podrá:
 - **Palma Ramirez Eduardo**
 - **Mendieta Delgado Deudiel**
 
----
 
 ## Roles
 
@@ -41,4 +40,7 @@ Ramirez Morales Ariel Ahmed, Valero Álvarez Nereida, Palma Ramirez Eduardo, Men
 
 - **Publicación e integración del código en el repositorio:**  
 Ramirez Morales Ariel Ahmed, Valero Álvarez Nereida, Palma Ramirez Eduardo, Mendieta Delgado Deudiel
+
+
+## Wireframes
 

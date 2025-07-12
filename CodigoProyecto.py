@@ -3,10 +3,9 @@ import tkinter as tk
 from tkinter import font
 
 #Creando una clase que organice las fuentes que se ocuparan
-#,Titulos, Textos, Botones, Etiqueta
-class Fuentes:
+#,Titulos, Textos, Botones, Etiqueclass Fuentes:
 
-    def __init__(self):
+def __init__(self):
 
         self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
         self.Textos = font.Font(family="Roboto", size=16, weight="light")

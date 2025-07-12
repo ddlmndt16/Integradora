@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import font
 
 #Creando una clase que organice las fuentes que se ocuparan
-#,Titulos, Textos, Botones, Etiqueclass Fuentes:
+#,Titulos, Textos, Botones, Etiquetas
 
 def __init__(self):
 

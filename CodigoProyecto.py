@@ -1,4 +1,6 @@
 import tkinter as tk
+import sqlite3 as sql
+from tkinter import messagebox
 #from PIL import Image
 from tkinter import font
 
@@ -87,17 +89,43 @@ E_correo.grid(row=1, column=0, padx=10, pady=5, sticky="e")
 EN_correo = tk.Entry(F_formulario,width=30)
 EN_correo.grid(row=1, column=1, padx=10, pady=5)
 
-E_edad = tk.Label(F_formulario,text="Fecha de nacimiento", font=("Roboto",13), fg="black")
-E_edad.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+E_clave = tk.Label(F_formulario,text="Contraseña", font=("Roboto",13), fg="black")
+E_clave.grid(row=2, column=0, padx=10, pady=5, sticky="e")
 
-EN_correo_edad = tk.Entry(F_formulario,width=30)
-EN_correo.grid(row=2, column=1, padx=10, pady=5)
+EN_clave = tk.Entry(F_formulario,width=30)
+EN_clave.grid(row=2, column=1, padx=10, pady=5)
 
+E_matricula = tk.Label(F_formulario,text="Matricula", font=("Roboto",13), fg="black")
+E_matricula.grid(row=3, column=0, padx=10, pady=5, sticky="e")
+
+EN_matricula = tk.Entry(F_formulario,width=30)
+EN_matricula.grid(row=3, column=1, padx=10, pady=5)
+
+
+#Funcion para guardar datos en la base de datos
+def guardar_datos():
+    matricula = EN_matricula.get()  # Obtener el nombre de usuario
+    nombre = EN_usuario.get()
+    correo = EN_correo.get()
+    clave = EN_clave.get()
+
+    # Conexión a la base de datos SQLite
+    # Guardar en la base de datos
+    conexionBD = sql.connect("Estudiante")
+    cursor = conexionBD.cursor()
+
+    cursor.execute(f"INSERT INTO Estudiante (matricula,nombre, correo, contraseña) VALUES ('{matricula}', '{nombre}', '{correo}','{clave}')")
+
+    conexionBD.commit()
+    conexionBD.close()
+
+
+#messagebox.showinfo("Datos guardados correctamente")
 #image_Usu = Img.open("Usuario.jpg")
-
+#Variable(caja de texto).set("Abigaíl")
 #boton para pasar a la segunda ventana
-boton_guardar = tk.Button(F_formulario,command= Principal, text="Registarse", font=("Roboto", 15), bg= color.A_P, fg= color.B_A, width=10, height=2)
-boton_guardar.grid(row=3, column=0, columnspan=2, pady=30)
+boton_guardar = tk.Button(F_formulario,command= lambda:[guardar_datos(),Principal], text="Registarse", font=("Roboto", 15), bg= color.A_P, fg= color.B_A, width=10, height=2)
+boton_guardar.grid(row=4, column=0, columnspan=2, pady=30)
 
 # ====================================
 # VENTANA 2 - Selección de Ejercicios 

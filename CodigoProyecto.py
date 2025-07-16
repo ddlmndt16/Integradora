@@ -1,29 +1,29 @@
-# Cambios en la rama código fuente
-# Este código crea una interfaz gráfica de usuario (GUI) utilizando tkinter en Python.
-
 import tkinter as tk
-#from PIL import Image
-from tkinter import font
+import tkinter as tk
+import mysql.connector
+from tkinter import messagebox, font
 
-#Creando una clase que organice las fuentes que se ocuparan
-#,Titulos, Textos, Botones, etiquetas
+# ======================================
+# CONEXIÓN A LA BASE DE DATOS MYSQL
+# ======================================
 
-def __init__(self):
+try:
+    conexion = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="STFUimdyingofguilt000616",
+        database="ProyectoIntegrador"
+    )
+except mysql.connector.Error as err:
+    print("Error de conexión a la base de datos:", err)
+    exit()
 
-        self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
-        self.Textos = font.Font(family="Roboto", size=16, weight="light")
-        self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
-        self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
-        
-#fuente= Fuentes()
-
-#Creando la clase para organizar los colores que se ocuparan
-#,A_P, A_P2, A_P3, A_P4, B_A
+# ======================================
+# FUENTES Y COLORES
+# ======================================
 
 class Colores:
-
     def __init__(self):
-
         self.A_P = "#3B05C4"
         self.A_P2 = "#3352F3"
         self.A_P3 = "#687EF4"
@@ -32,75 +32,94 @@ class Colores:
 
 color = Colores()
 
-#Creando la clase para organizar la navegacion en la pagina
+# ======================================
+# FUNCIONES
+# ======================================
 
-# =============================
-# FUNCION DE CAMBIO DE VENTANA
-# =============================
+def Cambio_Ventana(ventana1, ventana2):
+    ventana1.withdraw()
+    ventana2.deiconify()
 
-def Cambio_Ventana(ventana1,ventana2):
+def guardar_datos():
+    matricula = EN_matricula.get()
+    nombre = EN_usuario.get()
+    correo = EN_correo.get()
+    clave = EN_clave.get()
 
-    ventana1.withdraw()#ocultar
-    ventana2.deiconify()#mostrar 
+    try:
+        cursor = conexion.cursor()
+        sql = "INSERT INTO Estudiante (matricula, nombre, correo, contraseña) VALUES (%s, %s, %s, %s)"
+        valores = (matricula, nombre, correo, clave)
+        cursor.execute(sql, valores)
+        conexion.commit()
+        cursor.close()
+        messagebox.showinfo("Éxito", "Datos guardados correctamente.")
+    except mysql.connector.Error as err:
+        messagebox.showerror("Error", f"Ocurrió un error al guardar los datos:\n{err}")
 
-#Cambio = Navegacion()
+# ======================================
+# VENTANA PRINCIPAL - REGISTRO
+# ======================================
 
-#def Crear_Ventana(Ventana):
-
-    #Ventana.title("Estudio-VLS")
-    #Ventana.configure(bg=color.B_A)
-    #Ventana.geometry("1200x700")       
-
-# =======================
-# VENTANA 1 - Registro
-# =======================
-
- 
 Inicio = tk.Tk()
 Inicio.title("Estudio-VLS")
 Inicio.configure(bg=color.B_A)
 Inicio.geometry("1200x700")
 
-#Crear_Ventana(Inicio)
-
-def Principal():
-
-    Cambio_Ventana (Inicio,Principal)
-
-F_Der = tk.Frame(Inicio, bg= color.A_P3, width=300)
-F_Izq= tk.Frame(Inicio, bg= color.A_P3, width=300)
-F_Sup = tk.Frame(Inicio, bg= color.A_P, width=700, height=50)
-
-F_Der.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
-F_Izq.pack(fill=tk.Y, side=tk.LEFT, expand= True)
-F_Sup.pack(fill=tk.X, side= tk.TOP)
-
+F_Der = tk.Frame(Inicio, bg=color.A_P3, width=300)
+F_Izq = tk.Frame(Inicio, bg=color.A_P3, width=300)
+F_Sup = tk.Frame(Inicio, bg=color.A_P, width=700, height=50)
 F_formulario = tk.Frame(Inicio, bg=color.B_A)
+
+F_Der.pack(fill=tk.Y, side=tk.RIGHT, expand=True)
+F_Izq.pack(fill=tk.Y, side=tk.LEFT, expand=True)
+F_Sup.pack(fill=tk.X, side=tk.TOP)
 F_formulario.pack(expand=True)
-#Etiquetas y entradas
-E_usuario = tk.Label(F_formulario,text="Nombre de Usuario", font=("Roboto",13), fg="black")
-E_usuario.grid(row=0, column=0, padx=10, pady=5, sticky="e")
 
-EN_usuario = tk.Entry(F_formulario,width=30)
-EN_usuario.grid(row=0, column=1, padx=10, pady=5)
+# Entradas de formulario
+def etiqueta_entry(texto, fila):
+    label = tk.Label(F_formulario, text=texto, font=("Roboto", 13), fg="black", bg=color.B_A)
+    label.grid(row=fila, column=0, padx=10, pady=5, sticky="e")
+    entry = tk.Entry(F_formulario, width=30)
+    entry.grid(row=fila, column=1, padx=10, pady=5)
+    return entry
 
-E_correo = tk.Label(F_formulario,text="Correo electronico", font=("Roboto",13), fg="black")
-E_correo.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+EN_usuario = etiqueta_entry("Nombre de Usuario", 0)
+EN_correo = etiqueta_entry("Correo electrónico", 1)
+EN_clave = etiqueta_entry("Contraseña", 2)
+EN_matricula = etiqueta_entry("Matrícula", 3)
 
-EN_correo = tk.Entry(F_formulario,width=30)
-EN_correo.grid(row=1, column=1, padx=10, pady=5)
+# Botón guardar
+boton_guardar = tk.Button(
+    F_formulario,
+    text="Registrarse",
+    command=guardar_datos,
+    font=("Roboto", 15),
+    bg=color.A_P,
+    fg=color.B_A,
+    width=10,
+    height=2
+)
+boton_guardar.grid(row=4, column=0, columnspan=2, pady=30)
 
-E_edad = tk.Label(F_formulario,text="Fecha de nacimiento", font=("Roboto",13), fg="black")
-E_edad.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+# ======================================
+# INICIAR LOOP DE LA APP
+# ======================================
+Inicio.mainloop()
 
-EN_correo_edad = tk.Entry(F_formulario,width=30)
-EN_correo.grid(row=2, column=1, padx=10, pady=5)
+# ======================================
+# CERRAR CONEXIÓN AL SALIR
+# ======================================
+conexion.close()
 
+
+
+#messagebox.showinfo("Datos guardados correctamente")
 #image_Usu = Img.open("Usuario.jpg")
-
+#Variable(caja de texto).set("Abigaíl")
 #boton para pasar a la segunda ventana
-boton_guardar = tk.Button(F_formulario,command= Principal, text="Registarse", font=("Roboto", 15), bg= color.A_P, fg= color.B_A, width=10, height=2)
-boton_guardar.grid(row=3, column=0, columnspan=2, pady=30)
+boton_guardar = tk.Button(F_formulario,command= lambda:[guardar_datos(),Principal], text="Registarse", font=("Roboto", 15), bg= color.A_P, fg= color.B_A, width=10, height=2)
+boton_guardar.grid(row=4, column=0, columnspan=2, pady=30)
 
 # ====================================
 # VENTANA 2 - Selección de Ejercicios 
@@ -134,66 +153,7 @@ def configRouter():
     Cambio_Ventana(Principal, Ejer_ConfiRouter)
 
 
-<<<<<<< Updated upstream
-frame1 = tk.Frame(ventana, bg= "#688EF4", width=300)
-frame4 = tk.Frame(ventana, bg= "#687EF4", width=300)
-frame3 = tk.Frame(ventana, bg= "#3B05C4", width=700, height=50)
-
-
-# añadir los frames a la ventana usando pack() con fill, side y expand
-frame1.pack(fill=tk.Y, side=tk.LEFT, expand= True)
-frame4.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
-frame3.pack(fill=tk.X)
-
-
-#Etiquetas
-label_usuario = tk.Label(ventana,text="Nombre de Usuario", font=("Roboto",13), bg="#A1AFF7", fg="white")
-label_correo = tk.Label(ventana,text="Correo electronico", font=("Roboto",13), bg="#A1AFF7", fg="white")
-label_edad = tk.Label(ventana,text="Fecha de nacimiento", font=("Roboto",13), bg="#A1AFF7", fg="white")
-
-#Entradas
-entrada_usuario = tk.Entry(ventana,width=30)
-entrada_correo = tk.Entry(ventana,width=30)
-entrada_edad = tk.Entry(ventana,width=30)
-
-#Empaquetando las etiquetas y entradas
-label_usuario.pack(pady=5, padx=200)
-entrada_usuario.pack(pady=5, padx=200)
-label_correo.pack(pady=5, padx=10)
-entrada_correo.pack(pady=5, padx=20)
-label_edad.pack(pady=5, padx=10)
-entrada_edad.pack(pady=5, padx=20)
-
-boton_guardar = tk.Button(ventana,command=mostrar_ventana2, text="Registarse", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2)
-boton_guardar.pack(pady=30)
-
-# Ventana 2
-ventana2 = tk.Toplevel(ventana)
-ventana2.title("Estudio-VLSM")
-ventana2.geometry("1200x700")
-ventana2.configure(bg="#FFFFFF")
-
-def mostrar_ventana3():
-    ventana3.deiconify()
-    ventana2.withdraw()
-
-def mostrar_ventana4():
-    ventana4.deiconify()
-    ventana2.withdraw()
-
-def mostrar_ventana5():
-    ventana5.deiconify()
-    ventana2.withdraw()
-
-def mostrar_Perfil():
-    Perfil.deiconify()
-    ventana2.withdraw()
-
-
-Barra_superio = tk.Frame(ventana2, bg= "#3B05C4", width=700, height=80)
-=======
 Barra_superio = tk.Frame(Principal, bg= color.A_P , width=700, height=80)
->>>>>>> Stashed changes
 Barra_superio.pack(fill=tk.X)
 
 E_Titulo= tk.Label(Barra_superio, text="EJERCICIOS", font=("Times New Roman", 30), bg=color.B_A, fg="black")

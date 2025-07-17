@@ -18,22 +18,20 @@ except mysql.connector.Error as err:
     print("Error de conexión a la base de datos:", err)
     exit()
 
-# ======================================
+# ====================
 # FUENTES Y COLORES
-# ======================================
-
-
-
+# ====================
 
 #Creando una clase que organice las fuentes que se ocuparan
 #,Titulos, Textos, Botones, etiquetas
 
-def __init__(self):
+"""class Fuentes:
+    def __init__(self):
 
-        self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
-        self.Textos = font.Font(family="Roboto", size=16, weight="light")
-        self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
-        self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
+            self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+            self.Textos = font.Font(family="Roboto", size=16, weight="light")
+            self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+            self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")"""
         
 #fuente= Fuentes()
 
@@ -51,14 +49,31 @@ class Colores:
         self.B_A = "#F4F5FE"
 
 color = Colores()
+#Creando la clase para organizar la navegacion en la pagina
+
+#Cambio = Navegacion()
+
+#def Crear_Ventana(Ventana):
+
+    #Ventana.title("Estudio-VLS")
+    #Ventana.configure(bg=color.B_A)
+    #Ventana.geometry("1200x700")       
+
+#Creando la clase para organizar la navegacion en la pagina
+#,ventana1= Inicio, ventana2 = Principal
+
+# =============================
+# FUNCION DE CAMBIO DE VENTANA
+# =============================
+
+def Cambio_Ventana(self):
+
+    self.ventana1.withdraw()#ocultar
+    self.ventana2.deiconify()#mostrar  
 
 # ======================================
-# FUNCIONES
+# VENTANA PRINCIPAL - REGISTRO
 # ======================================
-
-def Cambio_Ventana(ventana1, ventana2):
-    ventana1.withdraw()
-    ventana2.deiconify()
 
 def guardar_datos():
     matricula = EN_matricula.get()
@@ -77,36 +92,13 @@ def guardar_datos():
     except mysql.connector.Error as err:
         messagebox.showerror("Error", f"Ocurrió un error al guardar los datos:\n{err}")
 
-# ======================================
-# VENTANA PRINCIPAL - REGISTRO
-# ======================================
-
-#Creando la clase para organizar la navegacion en la pagina
-
-# =============================
-# FUNCION DE CAMBIO DE VENTANA
-# =============================
-
-def Cambio_Ventana(ventana1,ventana2):
-
-    ventana1.withdraw()#ocultar
-    ventana2.deiconify()#mostrar 
-
-#Cambio = Navegacion()
-
-#def Crear_Ventana(Ventana):
-
-    #Ventana.title("Estudio-VLS")
-    #Ventana.configure(bg=color.B_A)
-    #Ventana.geometry("1200x700")       
 
 # =======================
 # VENTANA 1 - Registro
 # =======================
 
- 
 Inicio = tk.Tk()
-Inicio.title("Estudio-VLS")
+Inicio.title("Estudio-VLMS")
 Inicio.configure(bg=color.B_A)
 Inicio.geometry("1200x700")
 
@@ -134,16 +126,8 @@ EN_clave = etiqueta_entry("Contraseña", 2)
 EN_matricula = etiqueta_entry("Matrícula", 3)
 
 # Botón guardar
-boton_guardar = tk.Button(
-    F_formulario,
-    text="Registrarse",
-    command=guardar_datos,
-    font=("Roboto", 15),
-    bg=color.A_P,
-    fg=color.B_A,
-    width=10,
-    height=2
-)
+boton_guardar = tk.Button(F_formulario, text="Registrarse", command=guardar_datos, font=("Roboto", 15),
+ bg=color.A_P,fg=color.B_A, width=10, height=2)
 boton_guardar.grid(row=4, column=0, columnspan=2, pady=30)
 
 # ======================================
@@ -231,8 +215,6 @@ Principal = tk.Toplevel(Inicio)
 Principal.title("Estudio-VLS")
 Principal.configure(bg=color.B_A)
 Principal.geometry("1200x700")
-
-#Crear_Ventana(Principal)
 
 # ====================================
 # FUNCIONES DE NAVEGACIÓN - Ventana 2

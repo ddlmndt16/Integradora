@@ -1,8 +1,7 @@
 import tkinter as tk
-<<<<<<< HEAD
-import tkinter as tk
 import mysql.connector
-from tkinter import messagebox, font
+from tkinter import messagebox
+from tkinter import font
 
 # ======================================
 # CONEXIÓN A LA BASE DE DATOS MYSQL
@@ -23,13 +22,8 @@ except mysql.connector.Error as err:
 # FUENTES Y COLORES
 # ======================================
 
-class Colores:
-    def __init__(self):
-=======
-import sqlite3 as sql
-from tkinter import messagebox
-#from PIL import Image
-from tkinter import font
+
+
 
 #Creando una clase que organice las fuentes que se ocuparan
 #,Titulos, Textos, Botones, etiquetas
@@ -50,7 +44,6 @@ class Colores:
 
     def __init__(self):
 
->>>>>>> origin/main
         self.A_P = "#3B05C4"
         self.A_P2 = "#3352F3"
         self.A_P3 = "#687EF4"
@@ -59,7 +52,6 @@ class Colores:
 
 color = Colores()
 
-<<<<<<< HEAD
 # ======================================
 # FUNCIONES
 # ======================================
@@ -89,7 +81,6 @@ def guardar_datos():
 # VENTANA PRINCIPAL - REGISTRO
 # ======================================
 
-=======
 #Creando la clase para organizar la navegacion en la pagina
 
 # =============================
@@ -114,13 +105,11 @@ def Cambio_Ventana(ventana1,ventana2):
 # =======================
 
  
->>>>>>> origin/main
 Inicio = tk.Tk()
 Inicio.title("Estudio-VLS")
 Inicio.configure(bg=color.B_A)
 Inicio.geometry("1200x700")
 
-<<<<<<< HEAD
 F_Der = tk.Frame(Inicio, bg=color.A_P3, width=300)
 F_Izq = tk.Frame(Inicio, bg=color.A_P3, width=300)
 F_Sup = tk.Frame(Inicio, bg=color.A_P, width=700, height=50)
@@ -167,7 +156,6 @@ Inicio.mainloop()
 # ======================================
 conexion.close()
 
-=======
 #Crear_Ventana(Inicio)
 
 def Principal():
@@ -226,7 +214,6 @@ def guardar_datos():
 
     conexionBD.commit()
     conexionBD.close()
->>>>>>> origin/main
 
 
 #messagebox.showinfo("Datos guardados correctamente")
@@ -418,8 +405,4 @@ E_Titulo.pack(pady=20)
 #Etiqueta1_V5.pack(pady=40, fill=tk.X, padx=10)
 
 # iniciar el bucle de eventos
-<<<<<<< HEAD
 Inicio.mainloop()
-=======
-Inicio.mainloop()
->>>>>>> origin/main

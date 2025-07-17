@@ -32,8 +32,24 @@ except mysql.connector.Error as err:
             self.Textos = font.Font(family="Roboto", size=16, weight="light")
             self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
             self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")"""
+import sqlite3 as sql
+
+
+#Creando una clase que organice las fuentes que se ocuparan
+#,Titulos, Textos, Botones, etiquetas
+
+def __init__(self):
+
+        self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+        self.Textos = font.Font(family="Roboto", size=16, weight="light")
+        self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+        self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
         
 #fuente= Fuentes()
+def Cambio_Ventana(ventana1,ventana2):
+
+    ventana1.withdraw()#ocultar
+    ventana2.deiconify()#mostrar 
 
 #Creando la clase para organizar los colores que se ocuparan
 #,A_P, A_P2, A_P3, A_P4, B_A
@@ -59,86 +75,15 @@ color = Colores()
     #Ventana.configure(bg=color.B_A)
     #Ventana.geometry("1200x700")       
 
-#Creando la clase para organizar la navegacion en la pagina
-#,ventana1= Inicio, ventana2 = Principal
-
-# =============================
-# FUNCION DE CAMBIO DE VENTANA
-# =============================
-
-def Cambio_Ventana(self):
-
-    self.ventana1.withdraw()#ocultar
-    self.ventana2.deiconify()#mostrar  
-
-# ======================================
-# VENTANA PRINCIPAL - REGISTRO
-# ======================================
-
-def guardar_datos():
-    matricula = EN_matricula.get()
-    nombre = EN_usuario.get()
-    correo = EN_correo.get()
-    clave = EN_clave.get()
-
-    try:
-        cursor = conexion.cursor()
-        sql = "INSERT INTO Estudiante (matricula, nombre, correo, contraseña) VALUES (%s, %s, %s, %s)"
-        valores = (matricula, nombre, correo, clave)
-        cursor.execute(sql, valores)
-        conexion.commit()
-        cursor.close()
-        messagebox.showinfo("Éxito", "Datos guardados correctamente.")
-    except mysql.connector.Error as err:
-        messagebox.showerror("Error", f"Ocurrió un error al guardar los datos:\n{err}")
-
-
 # =======================
 # VENTANA 1 - Registro
 # =======================
 
+ 
 Inicio = tk.Tk()
-Inicio.title("Estudio-VLMS")
+Inicio.title("Estudio-VLS")
 Inicio.configure(bg=color.B_A)
 Inicio.geometry("1200x700")
-
-F_Der = tk.Frame(Inicio, bg=color.A_P3, width=300)
-F_Izq = tk.Frame(Inicio, bg=color.A_P3, width=300)
-F_Sup = tk.Frame(Inicio, bg=color.A_P, width=700, height=50)
-F_formulario = tk.Frame(Inicio, bg=color.B_A)
-
-F_Der.pack(fill=tk.Y, side=tk.RIGHT, expand=True)
-F_Izq.pack(fill=tk.Y, side=tk.LEFT, expand=True)
-F_Sup.pack(fill=tk.X, side=tk.TOP)
-F_formulario.pack(expand=True)
-
-# Entradas de formulario
-def etiqueta_entry(texto, fila):
-    label = tk.Label(F_formulario, text=texto, font=("Roboto", 13), fg="black", bg=color.B_A)
-    label.grid(row=fila, column=0, padx=10, pady=5, sticky="e")
-    entry = tk.Entry(F_formulario, width=30)
-    entry.grid(row=fila, column=1, padx=10, pady=5)
-    return entry
-
-EN_usuario = etiqueta_entry("Nombre de Usuario", 0)
-EN_correo = etiqueta_entry("Correo electrónico", 1)
-EN_clave = etiqueta_entry("Contraseña", 2)
-EN_matricula = etiqueta_entry("Matrícula", 3)
-
-# Botón guardar
-boton_guardar = tk.Button(F_formulario, text="Registrarse", command=guardar_datos, font=("Roboto", 15),
- bg=color.A_P,fg=color.B_A, width=10, height=2)
-boton_guardar.grid(row=4, column=0, columnspan=2, pady=30)
-
-# ======================================
-# INICIAR LOOP DE LA APP
-# ======================================
-Inicio.mainloop()
-
-# ======================================
-# CERRAR CONEXIÓN AL SALIR
-# ======================================
-conexion.close()
 
 #Crear_Ventana(Inicio)
 
@@ -215,6 +160,8 @@ Principal = tk.Toplevel(Inicio)
 Principal.title("Estudio-VLS")
 Principal.configure(bg=color.B_A)
 Principal.geometry("1200x700")
+
+#Crear_Ventana(Principal)
 
 # ====================================
 # FUNCIONES DE NAVEGACIÓN - Ventana 2

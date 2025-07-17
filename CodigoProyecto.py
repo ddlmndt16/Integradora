@@ -1,4 +1,5 @@
 import tkinter as tk
+<<<<<<< HEAD
 import tkinter as tk
 import mysql.connector
 from tkinter import messagebox, font
@@ -24,6 +25,32 @@ except mysql.connector.Error as err:
 
 class Colores:
     def __init__(self):
+=======
+import sqlite3 as sql
+from tkinter import messagebox
+#from PIL import Image
+from tkinter import font
+
+#Creando una clase que organice las fuentes que se ocuparan
+#,Titulos, Textos, Botones, etiquetas
+
+def __init__(self):
+
+        self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+        self.Textos = font.Font(family="Roboto", size=16, weight="light")
+        self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+        self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
+        
+#fuente= Fuentes()
+
+#Creando la clase para organizar los colores que se ocuparan
+#,A_P, A_P2, A_P3, A_P4, B_A
+
+class Colores:
+
+    def __init__(self):
+
+>>>>>>> origin/main
         self.A_P = "#3B05C4"
         self.A_P2 = "#3352F3"
         self.A_P3 = "#687EF4"
@@ -32,6 +59,7 @@ class Colores:
 
 color = Colores()
 
+<<<<<<< HEAD
 # ======================================
 # FUNCIONES
 # ======================================
@@ -61,11 +89,38 @@ def guardar_datos():
 # VENTANA PRINCIPAL - REGISTRO
 # ======================================
 
+=======
+#Creando la clase para organizar la navegacion en la pagina
+
+# =============================
+# FUNCION DE CAMBIO DE VENTANA
+# =============================
+
+def Cambio_Ventana(ventana1,ventana2):
+
+    ventana1.withdraw()#ocultar
+    ventana2.deiconify()#mostrar 
+
+#Cambio = Navegacion()
+
+#def Crear_Ventana(Ventana):
+
+    #Ventana.title("Estudio-VLS")
+    #Ventana.configure(bg=color.B_A)
+    #Ventana.geometry("1200x700")       
+
+# =======================
+# VENTANA 1 - Registro
+# =======================
+
+ 
+>>>>>>> origin/main
 Inicio = tk.Tk()
 Inicio.title("Estudio-VLS")
 Inicio.configure(bg=color.B_A)
 Inicio.geometry("1200x700")
 
+<<<<<<< HEAD
 F_Der = tk.Frame(Inicio, bg=color.A_P3, width=300)
 F_Izq = tk.Frame(Inicio, bg=color.A_P3, width=300)
 F_Sup = tk.Frame(Inicio, bg=color.A_P, width=700, height=50)
@@ -112,6 +167,66 @@ Inicio.mainloop()
 # ======================================
 conexion.close()
 
+=======
+#Crear_Ventana(Inicio)
+
+def Principal():
+
+    Cambio_Ventana (Inicio,Principal)
+
+F_Der = tk.Frame(Inicio, bg= color.A_P3, width=300)
+F_Izq= tk.Frame(Inicio, bg= color.A_P3, width=300)
+F_Sup = tk.Frame(Inicio, bg= color.A_P, width=700, height=50)
+
+F_Der.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
+F_Izq.pack(fill=tk.Y, side=tk.LEFT, expand= True)
+F_Sup.pack(fill=tk.X, side= tk.TOP)
+
+F_formulario = tk.Frame(Inicio, bg=color.B_A)
+F_formulario.pack(expand=True)
+#Etiquetas y entradas
+E_usuario = tk.Label(F_formulario,text="Nombre de Usuario", font=("Roboto",13), fg="black")
+E_usuario.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+
+EN_usuario = tk.Entry(F_formulario,width=30)
+EN_usuario.grid(row=0, column=1, padx=10, pady=5)
+
+E_correo = tk.Label(F_formulario,text="Correo electronico", font=("Roboto",13), fg="black")
+E_correo.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+
+EN_correo = tk.Entry(F_formulario,width=30)
+EN_correo.grid(row=1, column=1, padx=10, pady=5)
+
+E_clave = tk.Label(F_formulario,text="Contraseña", font=("Roboto",13), fg="black")
+E_clave.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+
+EN_clave = tk.Entry(F_formulario,width=30)
+EN_clave.grid(row=2, column=1, padx=10, pady=5)
+
+E_matricula = tk.Label(F_formulario,text="Matricula", font=("Roboto",13), fg="black")
+E_matricula.grid(row=3, column=0, padx=10, pady=5, sticky="e")
+
+EN_matricula = tk.Entry(F_formulario,width=30)
+EN_matricula.grid(row=3, column=1, padx=10, pady=5)
+
+
+#Funcion para guardar datos en la base de datos
+def guardar_datos():
+    matricula = EN_matricula.get()  # Obtener el nombre de usuario
+    nombre = EN_usuario.get()
+    correo = EN_correo.get()
+    clave = EN_clave.get()
+
+    # Conexión a la base de datos SQLite
+    # Guardar en la base de datos
+    conexionBD = sql.connect("Estudiante")
+    cursor = conexionBD.cursor()
+
+    cursor.execute(f"INSERT INTO Estudiante (matricula,nombre, correo, contraseña) VALUES ('{matricula}', '{nombre}', '{correo}','{clave}')")
+
+    conexionBD.commit()
+    conexionBD.close()
+>>>>>>> origin/main
 
 
 #messagebox.showinfo("Datos guardados correctamente")
@@ -303,4 +418,8 @@ E_Titulo.pack(pady=20)
 #Etiqueta1_V5.pack(pady=40, fill=tk.X, padx=10)
 
 # iniciar el bucle de eventos
+<<<<<<< HEAD
 Inicio.mainloop()
+=======
+Inicio.mainloop()
+>>>>>>> origin/main

@@ -168,7 +168,7 @@ boton_guardar = tk.Button(ventana,command=mostrar_ventana2, text="Registarse", f
 boton_guardar.pack(pady=30)
 
 # Ventana 2
-ventana2 = tk.Toplevel(ventana)
+ventana2 = tk.Toplevel(ventana) # Ventana de selección de ejercicios
 ventana2.title("Estudio-VLSM")
 ventana2.geometry("1200x700")
 ventana2.configure(bg="#FFFFFF")

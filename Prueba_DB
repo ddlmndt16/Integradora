@@ -1,0 +1,142 @@
+import sqlite3
+
+# Crear o conectar a la base de datos SQLite
+conn = sqlite3.connect('ProyectoIntegrador.db')
+cursor = conn.cursor()
+
+# Script SQL corregido
+script_sql = """
+CREATE TABLE IF NOT EXISTS Estudiante (
+    matricula TEXT PRIMARY KEY,
+    nombre TEXT,
+    correo TEXT UNIQUE,
+    contraseña TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Ejercicio (
+    idEjercicio INTEGER PRIMARY KEY,
+    descripcion TEXT,
+    resuelto BOOLEAN
+);
+
+CREATE TABLE IF NOT EXISTS Quiz (
+    idQuiz INTEGER PRIMARY KEY,
+    resuelto BOOLEAN
+);
+
+CREATE TABLE IF NOT EXISTS Estudiante_Ejercicio (
+    matricula TEXT,
+    idEjercicio INTEGER,
+    PRIMARY KEY (matricula, idEjercicio),
+    FOREIGN KEY (matricula) REFERENCES Estudiante(matricula),
+    FOREIGN KEY (idEjercicio) REFERENCES Ejercicio(idEjercicio)
+);
+
+CREATE TABLE IF NOT EXISTS Estudiante_Quiz (
+    matricula TEXT,
+    idQuiz INTEGER,
+    PRIMARY KEY (matricula, idQuiz),
+    FOREIGN KEY (matricula) REFERENCES Estudiante(matricula),
+    FOREIGN KEY (idQuiz) REFERENCES Quiz(idQuiz)
+);
+"""
+
+# Ejecutar el script
+cursor.executescript(script_sql)
+conn.commit()
+conn.close()
+
+import tkinter as tk
+from tkinter import messagebox, ttk
+import sqlite3
+
+# Función para registrar estudiante
+def registrar_estudiante():
+    matricula = entrada_matricula.get()
+    nombre = entrada_nombre.get()
+    correo = entrada_correo.get()
+    contraseña = entrada_contraseña.get()
+
+    if not matricula or not nombre or not correo or not contraseña:
+        messagebox.showwarning("Campos vacíos", "Todos los campos son obligatorios.")
+        return
+
+    try:
+        conn = sqlite3.connect('ProyectoIntegrador.db')
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            INSERT INTO Estudiante (matricula, nombre, correo, contraseña)
+            VALUES (?, ?, ?, ?)
+        """, (matricula, nombre, correo, contraseña))
+
+        conn.commit()
+        conn.close()
+
+        messagebox.showinfo("Éxito", "Estudiante registrado correctamente.")
+        entrada_matricula.delete(0, tk.END)
+        entrada_nombre.delete(0, tk.END)
+        entrada_correo.delete(0, tk.END)
+        entrada_contraseña.delete(0, tk.END)
+
+        actualizar_tabla()
+
+    except sqlite3.IntegrityError:
+        messagebox.showerror("Error", "Ya existe un estudiante con esa matrícula o correo.")
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+# Función para actualizar la tabla
+def actualizar_tabla():
+    for fila in tabla.get_children():
+        tabla.delete(fila)
+
+    conn = sqlite3.connect('ProyectoIntegrador.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Estudiante")
+    estudiantes = cursor.fetchall()
+    conn.close()
+
+    for est in estudiantes:
+        tabla.insert('', 'end', values=est)
+
+# Crear ventana principal
+ventana = tk.Tk()
+ventana.title("Registro de Estudiantes")
+ventana.geometry("600x500")
+ventana.resizable(False, False)
+
+# -------- Formulario --------
+tk.Label(ventana, text="Matrícula:").pack(pady=(10, 0))
+entrada_matricula = tk.Entry(ventana)
+entrada_matricula.pack()
+
+tk.Label(ventana, text="Nombre:").pack(pady=(10, 0))
+entrada_nombre = tk.Entry(ventana)
+entrada_nombre.pack()
+
+tk.Label(ventana, text="Correo:").pack(pady=(10, 0))
+entrada_correo = tk.Entry(ventana)
+entrada_correo.pack()
+
+tk.Label(ventana, text="Contraseña:").pack(pady=(10, 0))
+entrada_contraseña = tk.Entry(ventana, show="*")
+entrada_contraseña.pack()
+
+tk.Button(ventana, text="Guardar", command=registrar_estudiante, bg="#3B05C4", fg="white").pack(pady=10)
+
+# -------- Tabla --------
+tk.Label(ventana, text="Estudiantes Registrados", font=('Arial', 12, 'bold')).pack(pady=(10, 5))
+
+tabla = ttk.Treeview(ventana, columns=("Matrícula", "Nombre", "Correo", "Contraseña"), show="headings")
+tabla.heading("Matrícula", text="Matrícula")
+tabla.heading("Nombre", text="Nombre")
+tabla.heading("Correo", text="Correo")
+tabla.heading("Contraseña", text="Contraseña")
+tabla.pack(expand=True, fill='both', padx=10, pady=10)
+
+# Cargar datos existentes al iniciar
+actualizar_tabla()
+
+# Ejecutar ventana
+ventana.mainloop()

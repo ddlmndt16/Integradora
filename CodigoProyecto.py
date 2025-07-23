@@ -492,7 +492,7 @@ Barra_His= tk.Frame(Historial_Q, bg= color.A_P, height=50)
 Barra_His.pack(fill=tk.X)
 
 # Etiqueta de titulo
-E_historialEjer = tk.Label(Barra_His, text="Historial de QUIZZES", font=("Times New Roman", 39), bg= color.A_P, fg="black")
+E_historialEjer = tk.Label(Barra_His, text="Historial de Quizzes", font=("Times New Roman", 39), bg= color.A_P, fg="black")
 E_historialEjer.grid(row=0, column=0, padx= 300)
 
 # Botón de ajustes

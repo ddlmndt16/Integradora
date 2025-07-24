@@ -318,7 +318,7 @@ def toggle_barra():
         barra_visible = False
     else:
         barra_lateral.place(x=0, y=0, width=200, height=700)
-        barra_lateral.lift()  # Asegura que esté encima de otros widgets
+        barra_lateral.lift()  # S asegura de que esté encima de otros widgets
         barra_visible = True
 
 
@@ -369,20 +369,29 @@ image_Usu2 = Image.open("Usuario2.jpeg")
 image_Usu2 = image_Usu2.resize((300,280))  
 imagen_Usu2_tk = ImageTk.PhotoImage(image_Usu2)
 
+#Imagen de modificacion
 image_Lap = Image.open("Lapiz.jpeg")  
 image_Lap = image_Lap.resize((30,30))  
 imagen_Lap_tk = ImageTk.PhotoImage(image_Lap)
 
-ventana= Perfil_Usu
+#Imagen de Boton de regreso
+image_Fle = Image.open("Flecha.jpeg")  
+image_Fle = image_Fle.resize((50,50))  
+imagen_Fle_tk = ImageTk.PhotoImage(image_Fle)
 
-def principal(ventana):
-    Cambio_Ventana(ventana,Principal)
 
-Barra_superio_A = tk.Frame(Perfil_Usu, bg= color.A_P, width=700, height=50)
-Barra_superio_A.pack(fill=tk.X,side=tk.TOP)
 
-E_usuario = tk.Label(Barra_superio_A, text= "Perfil", font=fuente.Titulos, bg= color.A_P, fg="white")
-E_usuario.grid(row=1, column=0, padx=620, pady=5, sticky="w"+"e")
+def regresar():
+    Cambio_Ventana(Perfil_Usu,Principal)
+
+Barra_superior_A = tk.Frame(Perfil_Usu, bg= color.A_P, width=700, height=30)
+Barra_superior_A.pack(fill=tk.X,side=tk.TOP)
+
+B_Fle = tk.Button(Barra_superior_A, bd=0, bg= color.A_P, fg= color.A_P,activebackground=color.A_P, width=50, height=50,image=imagen_Fle_tk,command= regresar)
+B_Fle.grid(row=0, column=0, pady=10, padx=40, sticky="w")
+
+E_usuario = tk.Label(Barra_superior_A, text= "Perfil", font=fuente.Titulos, bg= color.A_P, fg="white")
+E_usuario.grid(row=0, column=1, padx=500, pady=5, sticky="w"+"e")
 
 F_perfil = tk.Frame(Perfil_Usu, bg= color.A_P4)
 F_perfil.pack(expand=True)
@@ -411,7 +420,7 @@ EN_correo = tk.Entry(F_perfil,width=40,font=("Arial",15), bd=0)
 EN_correo.grid(row=4, column=1, padx=10, pady=5, ipady=20, sticky="w")
 
 
-B_Ajustes = tk.Button(F_perfil,text="Guardar", font=("Roboto", 15), bg= color.A_P2, fg="white",width=15, height=2, bd=0,command= lambda: principal(ventana))
+B_Ajustes = tk.Button(F_perfil,text="Guardar", font=("Roboto", 15), bg= color.A_P2, fg="white",width=15, height=2, bd=0, command= regresar)
 B_Ajustes.grid(row=5, column=1, pady=30, padx=150, sticky="w")
 
 # =======================
@@ -423,16 +432,49 @@ Ejercicios.title("Estudio-VLSM")
 Ejercicios.configure(bg=color.A_P4)
 Ejercicios.geometry("1200x700")
 
-
 # Barra superior
-Barra_supe = tk.Frame(Ejercicios, bg= color.A_P, width=700, height=30)
-Barra_supe.pack(fill=tk.X, side= tk.TOP)
+Barra_supe_E = tk.Frame(Ejercicios, bg= color.A_P, width=700, height=30)
+Barra_supe_E.pack(fill=tk.X, side= tk.TOP)
 
-E_Ejercicios = tk.Label(Barra_supe, text="Ejercicios", font=("Times New Roman", 30), bg= color.A_P, fg="black")
-E_Ejercicios.grid(row=0, column=0, padx= 300)
+E_Ejercicios = tk.Label(Barra_supe_E, text="Ejercicios", font= fuente.Titulos, bg= color.A_P, fg="white")
+E_Ejercicios.grid(row=0, column=1, padx= 440, sticky="w"+"e")
 
-B_perfil = tk.Button(Barra_supe, bd=0, relief="raised", bg= color.A_P2, fg=color.A_P, width=60, height=60,image=imagen_Usu_tk)
-B_perfil.grid(row=0, column=1, pady=5, padx=30, sticky="e")
+
+F_Ejerc = tk.Frame(Ejercicios, bg= color.A_P4)
+F_Ejerc.pack(expand=True, fill="both")
+
+
+barra_L = tk.Frame(F_Ejerc, width=200, height=700, bg=color.A_P3)
+
+barra_v = False
+def barra():
+    global barra_v
+    if barra_v:
+        barra_L.place_forget()
+        barra_v = False
+    else:
+        barra_L.place(x=0, y=0, width=200, height=700)
+        barra_L.lift() 
+        barra_v = True
+
+B_perfil = tk.Button(Barra_supe_E, bd=0, relief="raised", bg= color.A_P2, fg=color.A_P, width=60, height=60,image=imagen_Aju_tk, command= barra)
+B_perfil.grid(row=0, column=0, pady=5, padx=30, sticky="e")
+
+
+B_Ejer1 = tk.Button(F_Ejerc,text="Ejercicio 1", font=("Roboto", 20), bg= color.A_P2, fg="white",width=15, height=2, bd=0)
+B_Ejer1.grid(row=0, column=2, pady=(60,15), padx=530, sticky="w"+"e")
+
+B_Ejer2 = tk.Button(F_Ejerc,text="Ejercicio 2", font=("Roboto", 20), bg= color.A_P2, fg="white",width=15, height=2, bd=0)
+B_Ejer2.grid(row=1, column=2, pady=15, padx=530, sticky="w"+"e")
+
+B_Ejer3 = tk.Button(F_Ejerc,text="Ejercicio 3", font=("Roboto", 20), bg= color.A_P2, fg="white",width=15, height=2, bd=0)
+B_Ejer3.grid(row=2, column=2, pady=15, padx=530, sticky="w"+"e")
+
+B_Ejer4 = tk.Button(F_Ejerc,text="Ejercicio 4", font=("Roboto", 20), bg= color.A_P2, fg="white",width=15, height=2, bd=0)
+B_Ejer4.grid(row=3, column=2, pady=15, padx=530, sticky="w"+"e")
+
+B_Ejer5 = tk.Button(F_Ejerc,text="Ejercicio 5", font=("Roboto", 20), bg= color.A_P2, fg="white",width=15, height=2, bd=0)
+B_Ejer5.grid(row=4, column=2, pady=15, padx=530, sticky="w"+"e")
 
 # Título centrado
 
@@ -453,7 +495,7 @@ E_Quizz = tk.Label(Barra_super, text="Quizzes", font=("Times New Roman", 39), bg
 E_Quizz.grid(row=0, column=0, padx= 300)
 
 # Botón de perfil
-B_perfil = tk.Button(Barra_supe, bd=0, relief="raised", bg= color.A_P2, fg=color.A_P, width=60, height=60,image=imagen_Usu_tk)
+B_perfil = tk.Button(Barra_super, bd=0, relief="raised", bg= color.A_P2, fg=color.A_P, width=60, height=60,image=imagen_Usu_tk)
 B_perfil.grid(row=0, column=1, pady=5, padx=30, sticky="e")
 
 # ====================================

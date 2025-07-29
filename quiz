@@ -1,0 +1,96 @@
+# Lista de preguntas
+preguntas = [
+    {
+        "pregunta": "¿Cuál es la subred de la IP 192.168.10.0/25?",
+        "opciones": [
+            "192.168.10.0/24",
+            "192.168.10.0/25",
+            "192.168.10.128/25",
+            "192.168.0.0/16"
+        ],
+        "respuesta_correcta": 1
+    },
+    {
+        "pregunta": "¿Cuál es la dirección de broadcast de la red 10.0.0.0/8?",
+        "opciones": [
+            "10.255.255.255",
+            "10.0.0.255",
+            "10.0.255.255",
+            "10.0.0.0"
+        ],
+        "respuesta_correcta": 0
+    },
+    {
+        "pregunta": "¿Cuántas direcciones tiene una red /30?",
+        "opciones": [
+            "4",
+            "6",
+            "2",
+            "8"
+        ],
+        "respuesta_correcta": 0
+    },
+    {
+        "pregunta": "¿Qué máscara corresponde a /20?",
+        "opciones": [
+            "255.255.224.0",
+            "255.255.240.0",
+            "255.255.255.0",
+            "255.255.255.240"
+        ],
+        "respuesta_correcta": 1
+    },
+    {
+        "pregunta": "¿Cuál es la primera IP válida de la subred 192.168.1.0/24?",
+        "opciones": [
+            "192.168.1.1",
+            "192.168.1.0",
+            "192.168.1.255",
+            "192.168.1.2"
+        ],
+        "respuesta_correcta": 0
+    }
+]
+
+# Guardar los resultados
+errores = []
+
+# Ejecutar el quiz
+for i, pregunta in enumerate(preguntas):
+    print(f"\n{'='*50}\nPregunta {i + 1}: {pregunta['pregunta']}")
+    
+    for j, opcion in enumerate(pregunta["opciones"]):
+        print(f"  {j + 1}) {opcion}")
+    
+    while True:
+        try:
+            respuesta = int(input("Tu respuesta (escribe el número): "))
+            if 1 <= respuesta <= len(pregunta["opciones"]):
+                respuesta -= 1  # Ajustar al índice
+                break
+            else:
+                print("Por favor, elige un número válido entre las opciones.")
+        except ValueError:
+            print("Entrada inválida, escribe solo el número de tu respuesta.")
+    
+    if respuesta == pregunta["respuesta_correcta"]:
+        print("¡Correcto!")
+    else:
+        print("Incorrecto.")
+        print(f"La respuesta correcta era: {pregunta['opciones'][pregunta['respuesta_correcta']]}")
+        errores.append({
+            "pregunta": pregunta["pregunta"],
+            "respuesta_correcta": pregunta["opciones"][pregunta["respuesta_correcta"]],
+            "respuesta_tuya": pregunta["opciones"][respuesta]
+        })
+
+# Resultados finales
+print(f"\n{'='*50}\n Resultados Finales:")
+if not errores:
+    print("¡Respondiste todo correctamente!")
+else:
+    print(f"Fallaste en {len(errores)} pregunta(s):\n")
+    for error in errores:
+        print(f" Pregunta: {error['pregunta']}")
+        print(f" Tu respuesta: {error['respuesta_tuya']}")
+        print(f" Respuesta correcta: {error['respuesta_correcta']}\n")

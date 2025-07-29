@@ -1,0 +1,64 @@
+# Lista de ejercicios
+ejercicios = [
+    {
+        "id": 1,
+        "descripcion": "¿Cuál es la dirección IP de broadcast para la red 192.168.1.0/24?",
+        "respuesta_correcta": "192.168.1.255"
+    },
+    {
+        "id": 2,
+        "descripcion": "¿Cuál es la máscara de subred para una red /26?",
+        "respuesta_correcta": "255.255.255.192"
+    },
+    {
+        "id": 3,
+        "descripcion": "¿Cuántas direcciones IP hay en una red /29?",
+        "respuesta_correcta": "8"
+    },
+    {
+        "id": 4,
+        "descripcion": "¿Cuál es la primera IP válida de la red 10.0.0.0/8?",
+        "respuesta_correcta": "10.0.0.1"
+    },
+    {
+        "id": 5,
+        "descripcion": "¿Qué máscara equivale a una red /20?",
+        "respuesta_correcta": "255.255.240.0"
+    }
+]
+
+errores = []
+aciertos = 0
+
+# Ejecutar el quiz
+print("\n======= Resolución de Ejercicios =======")
+
+for ejercicio in ejercicios:
+    print(f"\nEjercicio {ejercicio['id']}: {ejercicio['descripcion']}")
+    respuesta_usuario = input("Tu respuesta: ").strip().lower()
+    respuesta_correcta = ejercicio["respuesta_correcta"].strip().lower()
+
+    if respuesta_usuario == respuesta_correcta:
+        print("¡Correcto!")
+        aciertos += 1
+    else:
+        print("Incorrecto.")
+        print(f"La respuesta correcta era: {ejercicio['respuesta_correcta']}")
+        errores.append({
+            "descripcion": ejercicio["descripcion"],
+            "respuesta_tuya": respuesta_usuario,
+            "respuesta_correcta": ejercicio["respuesta_correcta"]
+        })
+
+# Resultados finales
+print("\n========= Resultados Finales =========")
+print(f"Ejercicios correctos: {aciertos}/{len(ejercicios)}")
+
+if errores:
+    print(f"\nEjercicios incorrectos:")
+    for e in errores:
+        print(f"Pregunta: {e['descripcion']}")
+        print(f"Tu respuesta: {e['respuesta_tuya']}")
+        print(f"Correcta: {e['respuesta_correcta']}\n")
+else:
+    print("¡Respondiste todo correctamente!")

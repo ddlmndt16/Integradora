@@ -1,9 +1,48 @@
 import tkinter as tk
+<<<<<<< HEAD
 import sqlite3 as sql
 from tkinter import messagebox
 #from PIL import Image
 from tkinter import font
 
+=======
+import mysql.connector
+from tkinter import messagebox
+from tkinter import font
+
+# ======================================
+# CONEXIÓN A LA BASE DE DATOS MYSQL
+# ======================================
+
+try:
+    conexion = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="STFUimdyingofguilt000616",
+        database="ProyectoIntegrador"
+    )
+except mysql.connector.Error as err:
+    print("Error de conexión a la base de datos:", err)
+    exit()
+
+# ====================
+# FUENTES Y COLORES
+# ====================
+
+#Creando una clase que organice las fuentes que se ocuparan
+#,Titulos, Textos, Botones, etiquetas
+
+"""class Fuentes:
+    def __init__(self):
+
+            self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+            self.Textos = font.Font(family="Roboto", size=16, weight="light")
+            self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+            self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")"""
+import sqlite3 as sql
+
+
+>>>>>>> 21d5a23353dc333c196e580f630aa372fb065d4f
 #Creando una clase que organice las fuentes que se ocuparan
 #,Titulos, Textos, Botones, etiquetas
 
@@ -15,6 +54,13 @@ def __init__(self):
         self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
         
 #fuente= Fuentes()
+<<<<<<< HEAD
+=======
+def Cambio_Ventana(ventana1,ventana2):
+
+    ventana1.withdraw()#ocultar
+    ventana2.deiconify()#mostrar 
+>>>>>>> 21d5a23353dc333c196e580f630aa372fb065d4f
 
 #Creando la clase para organizar los colores que se ocuparan
 #,A_P, A_P2, A_P3, A_P4, B_A
@@ -30,6 +76,7 @@ class Colores:
         self.B_A = "#F4F5FE"
 
 color = Colores()
+<<<<<<< HEAD
 
 #Creando la clase para organizar la navegacion en la pagina
 
@@ -42,6 +89,10 @@ def Cambio_Ventana(ventana1,ventana2):
     ventana1.withdraw()#ocultar
     ventana2.deiconify()#mostrar 
 
+=======
+#Creando la clase para organizar la navegacion en la pagina
+
+>>>>>>> 21d5a23353dc333c196e580f630aa372fb065d4f
 #Cambio = Navegacion()
 
 #def Crear_Ventana(Ventana):

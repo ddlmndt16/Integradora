@@ -1,19 +1,141 @@
+# Cambios en la rama código fuente
+# Este código crea una interfaz gráfica de usuario (GUI) utilizando tkinter en Python.
+
 import tkinter as tk
+#from PIL import Image
+from tkinter import font
 
-# crear la ventana de Acceso
-ventana = tk.Tk()
+#Creando una clase que organice las fuentes que se ocuparan
+#,Titulos, Textos, Botones, etiquetas
 
-# título de la ventana
-ventana.title("Estudio-VLSM")
-ventana.geometry("1200x700")
-ventana.configure(bg= "#A1AFF7")
+def __init__(self):
 
-def mostrar_ventana2():
-    ventana2.deiconify()
-    ventana.withdraw()
+        self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+        self.Textos = font.Font(family="Roboto", size=16, weight="light")
+        self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+        self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
+        
+#fuente= Fuentes()
+
+#Creando la clase para organizar los colores que se ocuparan
+#,A_P, A_P2, A_P3, A_P4, B_A
+
+class Colores:
+
+    def __init__(self):
+
+        self.A_P = "#3B05C4"
+        self.A_P2 = "#3352F3"
+        self.A_P3 = "#687EF4"
+        self.A_P4 = "#A1AFF7"
+        self.B_A = "#F4F5FE"
+
+color = Colores()
+
+#Creando la clase para organizar la navegacion en la pagina
+
+# =============================
+# FUNCION DE CAMBIO DE VENTANA
+# =============================
+
+def Cambio_Ventana(ventana1,ventana2):
+
+    ventana1.withdraw()#ocultar
+    ventana2.deiconify()#mostrar 
+
+#Cambio = Navegacion()
+
+#def Crear_Ventana(Ventana):
+
+    #Ventana.title("Estudio-VLS")
+    #Ventana.configure(bg=color.B_A)
+    #Ventana.geometry("1200x700")       
+
+# =======================
+# VENTANA 1 - Registro
+# =======================
+
+ 
+Inicio = tk.Tk()
+Inicio.title("Estudio-VLS")
+Inicio.configure(bg=color.B_A)
+Inicio.geometry("1200x700")
+
+#Crear_Ventana(Inicio)
+
+def Principal():
+
+    Cambio_Ventana (Inicio,Principal)
+
+F_Der = tk.Frame(Inicio, bg= color.A_P3, width=300)
+F_Izq= tk.Frame(Inicio, bg= color.A_P3, width=300)
+F_Sup = tk.Frame(Inicio, bg= color.A_P, width=700, height=50)
+
+F_Der.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
+F_Izq.pack(fill=tk.Y, side=tk.LEFT, expand= True)
+F_Sup.pack(fill=tk.X, side= tk.TOP)
+
+F_formulario = tk.Frame(Inicio, bg=color.B_A)
+F_formulario.pack(expand=True)
+#Etiquetas y entradas
+E_usuario = tk.Label(F_formulario,text="Nombre de Usuario", font=("Roboto",13), fg="black")
+E_usuario.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+
+EN_usuario = tk.Entry(F_formulario,width=30)
+EN_usuario.grid(row=0, column=1, padx=10, pady=5)
+
+E_correo = tk.Label(F_formulario,text="Correo electronico", font=("Roboto",13), fg="black")
+E_correo.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+
+EN_correo = tk.Entry(F_formulario,width=30)
+EN_correo.grid(row=1, column=1, padx=10, pady=5)
+
+E_edad = tk.Label(F_formulario,text="Fecha de nacimiento", font=("Roboto",13), fg="black")
+E_edad.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+
+EN_correo_edad = tk.Entry(F_formulario,width=30)
+EN_correo.grid(row=2, column=1, padx=10, pady=5)
+
+#image_Usu = Img.open("Usuario.jpg")
+
+#boton para pasar a la segunda ventana
+boton_guardar = tk.Button(F_formulario,command= Principal, text="Registarse", font=("Roboto", 15), bg= color.A_P, fg= color.B_A, width=10, height=2)
+boton_guardar.grid(row=3, column=0, columnspan=2, pady=30)
+
+# ====================================
+# VENTANA 2 - Selección de Ejercicios 
+# ====================================
+
+Principal = tk.Toplevel(Inicio)
+Principal.title("Estudio-VLS")
+Principal.configure(bg=color.B_A)
+Principal.geometry("1200x700")
+
+#Crear_Ventana(Principal)
+
+# ====================================
+# FUNCIONES DE NAVEGACIÓN - Ventana 2
+# ====================================
+
+def vlsm():
+    
+    Cambio_Ventana(Principal, Ejer_VLSM)
+
+def tablasDirec():
+   
+   Cambio_Ventana(Principal, Ejer_TablasDirec)
+
+def Config():
+
+   Cambio_Ventana(Principal, Ajustes)
+
+def configRouter():
+
+    Cambio_Ventana(Principal, Ejer_ConfiRouter)
 
 
-frame1 = tk.Frame(ventana, bg= "#687EF4", width=300)
+<<<<<<< Updated upstream
+frame1 = tk.Frame(ventana, bg= "#688EF4", width=300)
 frame4 = tk.Frame(ventana, bg= "#687EF4", width=300)
 frame3 = tk.Frame(ventana, bg= "#3B05C4", width=700, height=50)
 
@@ -46,7 +168,7 @@ boton_guardar = tk.Button(ventana,command=mostrar_ventana2, text="Registarse", f
 boton_guardar.pack(pady=30)
 
 # Ventana 2
-ventana2 = tk.Toplevel(ventana)
+ventana2 = tk.Toplevel(ventana) # Ventana de selección de ejercicios
 ventana2.title("Estudio-VLSM")
 ventana2.geometry("1200x700")
 ventana2.configure(bg="#FFFFFF")
@@ -69,158 +191,156 @@ def mostrar_Perfil():
 
 
 Barra_superio = tk.Frame(ventana2, bg= "#3B05C4", width=700, height=80)
+=======
+Barra_superio = tk.Frame(Principal, bg= color.A_P , width=700, height=80)
+>>>>>>> Stashed changes
 Barra_superio.pack(fill=tk.X)
 
-Configuracion = tk.Button(Barra_superio, text="Ajustes", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2,command=mostrar_Perfil)
-Configuracion.grid(row=0, column=4, padx=1070)
+E_Titulo= tk.Label(Barra_superio, text="EJERCICIOS", font=("Times New Roman", 30), bg=color.B_A, fg="black")
+E_Titulo.grid(row=0, column=0, columnspan=2, pady=20)
 
-Barra_superio = tk.Frame(ventana2, bg= "#FFFFFF", width=700, height=150)
-label_Titulo= tk.Label(ventana2, text="EJERCICIOS", font=("Times New Roman", 30), bg="#FFFFFF", fg="black")
-label_Titulo.pack(pady=20, padx=200)
-Barra_superio.pack(fill=tk.X)
+Ajustes = tk.Button(Barra_superio, text="Ajustes", font=("Roboto", 12), bg= color.A_P3, fg="white", width=10, height=2,command= Config)
+Ajustes.grid(row=4, column=0, columnspan=2, pady=20)
 
-Etiqueta1_V2 = tk.Frame(ventana2, bg= "#FFFFFF")
-Etiqueta1_V2.pack(pady=40)
+"""Barra_superio = tk.Frame(Principal, bg= color.B_A, width=700, height=150)
+Barra_superio.pack(fill=tk.X)"""
 
-#Etiquetas2 
-label_Ejercicio1 = tk.Label(Etiqueta1_V2, text="VLSM", font=("Roboto", 30), bg="#FFFFFF", fg="black")
-label_Ejercicio2 = tk.Label(Etiqueta1_V2, text="Tablas de direccionamiento", font=("Roboto", 30), bg="#FFFFFF", fg="black")
-label_Ejercicio3 = tk.Label(Etiqueta1_V2, text="Configuración de un Router", font=("Roboto", 30), bg="#FFFFFF", fg="black")
+Etiqueta1 = tk.Frame(Principal, bg= color.B_A)
+Etiqueta1.pack(expand=True)
 
+#Etiquetas y botones
+E_VLSM = tk.Label(Etiqueta1, text="VLSM", font=("Roboto", 30), bg= color.B_A, fg="black")
+E_VLSM.grid(row=1, column=0, padx=20, pady=10, sticky="e")
 
-#Entradas2
-Ejercicio1 = tk.Button(Etiqueta1_V2, text="Abrir", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana3)
-Ejercicio2 = tk.Button(Etiqueta1_V2, text="Abrir", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana4)
-Ejercicio3 = tk.Button(Etiqueta1_V2, text="Abrir", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana5)
+B_EjerVLSM = tk.Button(Etiqueta1,text="Abrir", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= vlsm)
+B_EjerVLSM.grid(row=1, column=1, padx=10, pady=10)
 
-#Empaquetando las etiquetas y entradas
+#2
+E_TablasDirec = tk.Label(Etiqueta1, text="Tablas de direccionamiento", font=("Roboto", 30), bg= color.B_A, fg="black")
+E_TablasDirec.grid(row=2, column=0, padx=20, pady=10, sticky="e")
 
-label_Ejercicio1.grid(row=0, column=1, pady=15, padx=200)
-Ejercicio1.grid(row=0, column=2, pady=10, padx=10)
+B_EjerTablasDirec = tk.Button(Etiqueta1,text="Abrir", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= tablasDirec)
+E_TablasDirec.grid(row=2, column=1, padx=10, pady=10)
 
-label_Ejercicio2.grid(row=1, column=1, pady=15, padx=200)
-Ejercicio2.grid(row=1, column=2, pady=10, padx=10)
+#3
+E_ConfiRouter = tk.Label(Etiqueta1, text="Configuración de un Router", font=("Roboto", 30), bg= color.B_A, fg="black")
+E_ConfiRouter.grid(row=3, column=0, padx=20, pady=10, sticky="e")
 
-label_Ejercicio3.grid(row=2, column=1, pady=15, padx=20)
-Ejercicio3.grid(row=2, column=2, pady=10, padx=10)
-
-Etiqueta1_V2.pack(fill=tk.X)
-Etiqueta1_V2.pack(padx=10, pady=10)
-
-#Creando la ventana de ajustes
-Perfil = tk.Toplevel(ventana2)
-Perfil.title("Estudio-VLSM")
-Perfil.geometry("1200x700")
-Perfil.configure(bg= "#A1AFF7")
+B_EjerConfigRouter = tk.Button(Etiqueta1,text="Abrir", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= configRouter)
+E_ConfiRouter.grid(row=3, column=1, padx=10, pady=10)
 
 
-frame1 = tk.Frame(Perfil, bg= "#687EF4", width=300)
-frame4 = tk.Frame(Perfil, bg= "#687EF4", width=300)
-frame3 = tk.Frame(Perfil, bg= "#3B05C4", width=700, height=50)
+
+# ======================================
+# VENTANA Ajustes - Apartado de ajustes 
+# ======================================
+
+Ajustes = tk.Toplevel(Principal)
+Ajustes.title("Estudio-VLS")
+Ajustes.configure(bg=color.B_A)
+Ajustes.geometry("1200x700")
+
+#Crear_Ventana(Ajustes)
+ventana= Ajustes
+def principal(ventana):
+    Cambio_Ventana(ventana,Principal)
+
+Barra_superio_A = tk.Frame(Ajustes, bg= color.A_P, width=700, height=80)
+Barra_superio_A.pack(fill=tk.X,side=tk.TOP)
+
+F_Ajustes = tk.Frame(Ajustes, bg= color.B_A)
+F_Ajustes.pack(expand=True)
+
+#Etiquetas y Entradas
+E_usuario = tk.Label(F_Ajustes, text="Cambiar Nombre ", font=("Roboto",15), bg= color.A_P4, fg="white")
+E_usuario.pack(pady=5, padx=200)
+
+EN_usuario = tk.Entry(F_Ajustes,width=30,font=(18))
+EN_usuario.pack(pady=5, padx=20)
+
+E_correo = tk.Label(F_Ajustes, text="Cambiar Correo", font=("Roboto",15), bg= color.A_P4, fg="white")
+E_correo.pack(pady=5, padx=10)
+
+EN_correo = tk.Entry(F_Ajustes,width=30,font=(18))
+EN_correo.pack(pady=5, padx=20)
 
 
-# añadir los frames a la ventana usando pack() con fill, side y expand
-frame1.pack(fill=tk.Y, side=tk.LEFT,expand=True)
-frame4.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
-frame3.pack(fill=tk.X,side=tk.TOP)
+B_Ajustes = tk.Button(F_Ajustes,text="Guardar", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= principal(ventana))
+B_Ajustes.pack(pady=30)
 
+# ============================
+# VENTANA 3 - Ejercicio VLSM
+# ============================
 
-#Etiquetas
-label_usuario = tk.Label(Perfil,text="Cambiar Nombre ", font=("Roboto",15), bg="#A1AFF7", fg="white")
-label_correo = tk.Label(Perfil,text="Cambiar Correo", font=("Roboto",15), bg="#A1AFF7", fg="white")
+Ejer_VLSM =tk.Toplevel(Principal)
+Ejer_VLSM.title("Estudio-VLS")
+Ejer_VLSM.configure(bg=color.B_A)
+Ejer_VLSM.geometry("1200x700")
 
-#Entradas
-entrada_usuario = tk.Entry(Perfil,width=30,font=(18))
-entrada_correo = tk.Entry(Perfil,width=30,font=(18))
-
-#Empaquetando las etiquetas y entradas
-label_usuario.pack(pady=5, padx=200)
-entrada_usuario.pack(pady=5, padx=20)
-label_correo.pack(pady=5, padx=10)
-entrada_correo.pack(pady=5, padx=20)
-
-
-Cambiar = tk.Button(Perfil,text="Guardar", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2,command=mostrar_ventana2)
-Cambiar.pack(pady=30)
-
-
-# Ventana 3
-ventana3 = tk.Toplevel(ventana2)
-ventana3.title("Estudio-VLSM")
-ventana3.geometry("1200x700")
-ventana3.configure(bg="#FFFFFF")
-
-def mostrar_Principal():
-    ventana2.deiconify()
-    ventana3.withdraw()
+#Crear_Ventana(Ejer_VLSM)
 
 # Barra superior
-Barra_superior2 = tk.Frame(ventana3, bg="#3B05C4", height=20)
-Barra_superior2.pack(fill=tk.X)
+Barra_superior3 = tk.Frame(Ejer_VLSM, bg= color.A_P, height=20)
+Barra_superior3.grid(row=0, column=1, padx=10)
 
+B_Regresar = tk.Button(Barra_superior3, text="Regresar", font=("Roboto", 12), bg= color.A_P3, fg="white", width=10, height=2, command= principal(Ejer_VLSM))
+B_Regresar.grid(row=0, column=0, pady=5)
 
 # Título centrado
-label_Titulo2 = tk.Label(Barra_superior2, text="EJERCICIO VLSM", font=("Times New Roman", 30), bg="#3B05C4", fg="black")
-label_Titulo2.grid(row=0, column=4,padx= 300)
-# Botón a la izquierda
-Regreso = tk.Button(Barra_superior2, text="Regresar", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2, command=mostrar_Principal)
-Regreso.grid(row=0, column=0, pady=5)
+E_Titulo = tk.Label(Barra_superior3, text="EJERCICIO VLSM", font=("Times New Roman", 30), bg= color.A_P, fg="black")
+E_Titulo.grid(row=0, column=4,padx= 300)
 
 #Etiqueta
-Etiqueta1_V3 = tk.Frame(ventana3, bg="#FFFFFF")
-Etiqueta1_V3.pack(pady=40, fill=tk.X, padx=10)
+#Etiqueta1_V3 = tk.Frame(ventana3, bg="#FFFFFF")
+#Etiqueta1_V3.pack(pady=40, fill=tk.X, padx=10)
 
-# Ventana 4
-ventana4 = tk.Toplevel(ventana2)
-ventana4.title("Estudio-VLSM")
-ventana4.geometry("1200x700")
-ventana4.configure(bg="#FFFFFF")
+# ============================
+# VENTANA 4 - Tablas de direccionamiento
+# ============================
 
-def mostrar_Principal():
-    ventana2.deiconify()
-    ventana4.withdraw()
+Ejer_TablasDirec= tk.Toplevel(Principal)
+Ejer_TablasDirec.title("Estudio-VLS")
+Ejer_TablasDirec.configure(bg=color.B_A)
+Ejer_TablasDirec.geometry("1200x700")
 
-# Barra superior
-Barra_superior3 = tk.Frame(ventana4, bg="#3B05C4", height=70)
-Barra_superior3.pack(fill=tk.X)
-
-
-# Título centrado
-label_Titulo3 = tk.Label(Barra_superior3, text="Tablas de direccionamiento", font=("Times New Roman", 39), bg="#3B05C4", fg="black")
-label_Titulo3.grid(row=0, column=3,padx= 200)
-# Botón a la izquierda
-Boton_Regreso = tk.Button(Barra_superior3, text="Regresar", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2, command=mostrar_Principal)
-Boton_Regreso.grid(row=0, column=0, pady=5)
-
-#Etiqueta
-Etiqueta1_V4 = tk.Frame(ventana4, bg="#FFFFFF")
-Etiqueta1_V4.pack(pady=40, fill=tk.X, padx=10)
-
-# Ventana 5
-ventana5 = tk.Toplevel(ventana2)
-ventana5.title("Estudio-VLSM")
-ventana5.geometry("1200x700")
-ventana5.configure(bg="#FFFFFF")
-
-def mostrar_Principal():
-    ventana2.deiconify()
-    ventana5.withdraw()
+#Crear_Ventana(Ejer_TablasDirec)
 
 # Barra superior
-Barra_superior4 = tk.Frame(ventana5, bg="#3B05C4", height=70)
+Barra_superior4 = tk.Frame(Ejer_TablasDirec, bg= color.A_P, height=70)
 Barra_superior4.pack(fill=tk.X)
 
-
 # Título centrado
-label_Titulo4 = tk.Label(Barra_superior4, text="Configuración de un Router", font=("Times New Roman", 39), bg="#3B05C4", fg="black")
-label_Titulo4.grid(row=0, column=3,padx= 200)
-# Botón a la izquierda
-Boton_Regreso = tk.Button(Barra_superior4, text="Regresar", font=("Roboto", 12), bg="#687EF4", fg="white", width=10, height=2, command=mostrar_Principal)
-Boton_Regreso.grid(row=0, column=0, pady=5)
+E_Titulo = tk.Label(Barra_superior4, text="Tablas de direccionamiento", font=("Times New Roman", 39), bg= color.A_P, fg="black")
+E_Titulo.pack(pady=20)
 
-#Etiqueta
-Etiqueta1_V5 = tk.Frame(ventana5, bg="#FFFFFF")
-Etiqueta1_V5.pack(pady=40, fill=tk.X, padx=10)
+# Botón a la izquierda
+B_Regresar = tk.Button(Barra_superior4, text="Regresar", font=("Roboto", 12), bg=color.A_P3, fg="white", width=10, height=2, command= principal(Ejer_TablasDirec))
+B_Regresar.pack(pady=10)
+
+# ============================
+# VENTANA 5 - Configuración de Router
+# ============================
+
+Ejer_ConfiRouter = tk.Toplevel(Principal)
+Ejer_ConfiRouter.title("Estudio-VLS")
+Ejer_ConfiRouter.configure(bg=color.B_A)
+Ejer_ConfiRouter.geometry("1200x700")
+
+#Crear_Ventana(Ejer_ConfiRouter)
+
+# Barra superior
+Barra_superior5= tk.Frame(Ejer_ConfiRouter, bg= color.A_P, height=70)
+Barra_superior5.pack(fill=tk.X)
+
+B_Regresar = tk.Button(Barra_superior5, text="Regresar", font=("Roboto", 12), bg= color.A_P3, fg="white", width=10, height=2, command= principal(Ejer_ConfiRouter))
+B_Regresar.pack(pady=10)
+
+E_Titulo = tk.Label(Barra_superior5, text="Configuración de un Router", font=("Times New Roman", 39), bg= color.A_P, fg="black")
+E_Titulo.pack(pady=20)
+
+
+#Etiqueta1_V5 = tk.Frame(ventana5, bg="#FFFFFF")
+#Etiqueta1_V5.pack(pady=40, fill=tk.X, padx=10)
 
 # iniciar el bucle de eventos
-ventana.mainloop()
+Inicio.mainloop()

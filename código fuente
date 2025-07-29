@@ -134,66 +134,7 @@ def configRouter():
     Cambio_Ventana(Principal, Ejer_ConfiRouter)
 
 
-<<<<<<< Updated upstream
-frame1 = tk.Frame(ventana, bg= "#688EF4", width=300)
-frame4 = tk.Frame(ventana, bg= "#687EF4", width=300)
-frame3 = tk.Frame(ventana, bg= "#3B05C4", width=700, height=50)
-
-
-# añadir los frames a la ventana usando pack() con fill, side y expand
-frame1.pack(fill=tk.Y, side=tk.LEFT, expand= True)
-frame4.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
-frame3.pack(fill=tk.X)
-
-
-#Etiquetas
-label_usuario = tk.Label(ventana,text="Nombre de Usuario", font=("Roboto",13), bg="#A1AFF7", fg="white")
-label_correo = tk.Label(ventana,text="Correo electronico", font=("Roboto",13), bg="#A1AFF7", fg="white")
-label_edad = tk.Label(ventana,text="Fecha de nacimiento", font=("Roboto",13), bg="#A1AFF7", fg="white")
-
-#Entradas
-entrada_usuario = tk.Entry(ventana,width=30)
-entrada_correo = tk.Entry(ventana,width=30)
-entrada_edad = tk.Entry(ventana,width=30)
-
-#Empaquetando las etiquetas y entradas
-label_usuario.pack(pady=5, padx=200)
-entrada_usuario.pack(pady=5, padx=200)
-label_correo.pack(pady=5, padx=10)
-entrada_correo.pack(pady=5, padx=20)
-label_edad.pack(pady=5, padx=10)
-entrada_edad.pack(pady=5, padx=20)
-
-boton_guardar = tk.Button(ventana,command=mostrar_ventana2, text="Registarse", font=("Roboto", 15), bg="#3B05C4", fg="white",width=10, height=2)
-boton_guardar.pack(pady=30)
-
-# Ventana 2
-ventana2 = tk.Toplevel(ventana) # Ventana de selección de ejercicios
-ventana2.title("Estudio-VLSM")
-ventana2.geometry("1200x700")
-ventana2.configure(bg="#FFFFFF")
-
-def mostrar_ventana3():
-    ventana3.deiconify()
-    ventana2.withdraw()
-
-def mostrar_ventana4():
-    ventana4.deiconify()
-    ventana2.withdraw()
-
-def mostrar_ventana5():
-    ventana5.deiconify()
-    ventana2.withdraw()
-
-def mostrar_Perfil():
-    Perfil.deiconify()
-    ventana2.withdraw()
-
-
-Barra_superio = tk.Frame(ventana2, bg= "#3B05C4", width=700, height=80)
-=======
 Barra_superio = tk.Frame(Principal, bg= color.A_P , width=700, height=80)
->>>>>>> Stashed changes
 Barra_superio.pack(fill=tk.X)
 
 E_Titulo= tk.Label(Barra_superio, text="EJERCICIOS", font=("Times New Roman", 30), bg=color.B_A, fg="black")

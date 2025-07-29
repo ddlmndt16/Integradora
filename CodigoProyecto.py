@@ -1,465 +1,337 @@
 import tkinter as tk
+import mysql.connector
 from tkinter import messagebox
-import mysql.connector
+from tkinter import font
 
-# ====== CONEXIÓN MYSQL ======
+# ======================================
+# CONEXIÓN A LA BASE DE DATOS MYSQL
+# ======================================
 
-import mysql.connector
+try:
+    conexion = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="STFUimdyingofguilt000616",
+        database="ProyectoIntegrador"
+    )
+except mysql.connector.Error as err:
+    print("Error de conexión a la base de datos:", err)
+    exit()
 
-class CConexion:
+# ====================
+# FUENTES Y COLORES
+# ====================
 
-    def ConexionBaseDeDatos():
-        try:
-            conexion = mysql.connector.connect(
-                user='root',
-                password='200618Rm',
-                host='localhost',
-                database='ProyectoSQL',
-                port='3306'
-            )
-            print("Conexión exitosa a la base de datos.")
-            return conexion
-        except mysql.connector.Error as error:
-            print("Error al conectar a la base de datos: {}".format(error))
-            return None
+#Creando una clase que organice las fuentes que se ocuparan
+#,Titulos, Textos, Botones, etiquetas
 
-# ====== Informacion Estudiante ======
+"""class Fuentes:
+    def __init__(self):
 
-class Estudiantes:
+            self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+            self.Textos = font.Font(family="Roboto", size=16, weight="light")
+            self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+            self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")"""
+import sqlite3 as sql
 
-    def ingresarEstudiante(matricula, nombre, correo, contraseña):
-        conexion = CConexion.ConexionBaseDeDatos()
-        if conexion is None:
-            raise Exception("Error al conectar a la base de datos.")
 
-        try:
-            cursor = conexion.cursor()
-            sql = "INSERT INTO Estudiante (matricula, nombre, correo, contraseña) VALUES (%s, %s, %s, %s);"
-            valores = (matricula, nombre, correo, contraseña)
-            cursor.execute(sql, valores)
-            conexion.commit()
-            print("Estudiante registrado correctamente.")
-        except mysql.connector.errors.IntegrityError:
-            raise Exception("La matrícula o el correo ya están registrados.")
-        except Exception as e:
-            raise Exception(f"Error al insertar el estudiante: {e}")
-        finally:
-            conexion.close()
+#Creando una clase que organice las fuentes que se ocuparan
+#,Titulos, Textos, Botones, etiquetas
 
-# ====== APLICACIÓN PRINCIPAL ======
+def __init__(self):
 
-class Aplicacion:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Scripted Networks - Inicio")
-        self.root.geometry("1750x1150")
-        self.root.configure(bg="#A5B4FC") 
-
-        # Fuentes
-
-        self.fuente_titulo = ("Georgia", 22)
-        self.fuente_etiquetas = ("Arial", 10, "bold")
-        self.fuente_link = ("Arial", 9, "italic")
-
-        self.frame_actual = None
-        self.mostrar_login()
-
-    def limpiar_frame(self):
-        if self.frame_actual:
-            self.frame_actual.destroy()
-
-    def crear_campo(self, contenedor, texto, es_password=False):
-        frame = tk.Frame(contenedor, bg="#A5B4FC")
-        frame.pack(pady=15) 
-
-        # Icono de etiqueta
-
-        tk.Label(bg="#A5B4FC", font=("Arial", 12)).pack(anchor="w", padx=5)
-        tk.Label(frame, text=texto.upper(), bg="#A5B4FC", fg="black",
-                 font=self.fuente_etiquetas).pack(anchor="w", padx=5)
-
-        entrada = tk.Entry(frame, width=40, font=("Arial", 12), bg="#F1F5F9", relief="flat",
-                           show="*" if es_password else "")
-        entrada.pack(ipady=8, pady=5)
-        return entrada
-
-    # ======= Mostrar inicio de sesión =======
-
-    def mostrar_login(self):
-        self.root.title("Scripted Networks - Inicio de Sesión")
-        self.limpiar_frame()
-        self.frame_actual = tk.Frame(self.root, bg="#A5B4FC")
-        self.frame_actual.pack(expand=True, pady=10)
-
-        # Encabezado azul
-
-        encabezado = tk.Frame(self.frame_actual, bg="#003CFF", height=80)
-        encabezado.pack(fill="x")
-        tk.Label(encabezado, text="Inicio de sesión", bg="#003CFF", fg="white",
-                 font=self.fuente_titulo).pack(pady=20)
-
-        # Campos
-
-        self.login_matricula = self.crear_campo(self.frame_actual, "Matrícula")
-        self.login_correo = self.crear_campo(self.frame_actual, "Correo Electrónico")
-        self.login_contraseña = self.crear_campo(self.frame_actual, "Contraseña", es_password=True)
-
-        # Botón de inicio de sesión
-
-        tk.Button(self.frame_actual, text="INICIAR SESIÓN", bg="#3B82F6", fg="white",
-                  width=25, height=2, font=("Arial", 12, "bold"),
-                  command=self.iniciar_sesion).pack(pady=30)
-
-        # Texto inferior (link de registro)
-
-        frame_link = tk.Frame(self.frame_actual, bg="#A5B4FC")
-        frame_link.pack()
-        tk.Label(frame_link, text="¿No tienes cuenta?", bg="#A5B4FC", font=self.fuente_link).pack(side="left")
-
-        link = tk.Label(frame_link, text="Registrarse", bg="#A5B4FC", fg="#1D4ED8",
-                        font=self.fuente_link, cursor="hand2")
-        link.pack(side="left", padx=5)
-        link.bind("<Button-1>", lambda e: self.mostrar_registro())
-
-    # ======= Mostrar registro de usuario =======
-
-    def mostrar_registro(self):
-        self.root.title("Scripted Networks - Registro de Usuario")
-        self.limpiar_frame()
-        self.frame_actual = tk.Frame(self.root, bg="#A5B4FC")
-        self.frame_actual.pack(expand=True, pady=10)
-
-        encabezado = tk.Frame(self.frame_actual, bg="#003CFF", height=80)
-        encabezado.pack(fill="x")
-        tk.Label(encabezado, text="Registro de usuario", bg="#003CFF", fg="white",
-                 font=self.fuente_titulo).pack(pady=20)
-
-        # Campos del registro
+        self.Titulos = font.Font(family="Roboto", size=13, weight="bold")
+        self.Textos = font.Font(family="Roboto", size=16, weight="light")
+        self.Botones = font.Font(family="Roboto", size=13, weight="semibold")
+        self.Etiquetas = font.Font(family="Roboto", size=13, weight="medium")
         
-        self.reg_matricula = self.crear_campo(self.frame_actual, "Matrícula")
-        self.reg_nombre = self.crear_campo(self.frame_actual, "Nombre")
-        self.reg_correo = self.crear_campo(self.frame_actual, "Correo Electrónico")
-        self.reg_contrasena = self.crear_campo(self.frame_actual, "Contraseña", es_password=True)
+#fuente= Fuentes()
+def Cambio_Ventana(ventana1,ventana2):
 
-        # Botón de registrar
+    ventana1.withdraw()#ocultar
+    ventana2.deiconify()#mostrar 
 
-        tk.Button(self.frame_actual, text="REGISTRAR", bg="#3B82F6", fg="white",
-                  width=25, height=2, font=("Arial", 12, "bold"),
-                  command=self.registrar_usuario).pack(pady=30)
+#Creando la clase para organizar los colores que se ocuparan
+#,A_P, A_P2, A_P3, A_P4, B_A
 
-    # Registrar usuario en la base de datos
+class Colores:
 
-    def registrar_usuario(self):
-        matricula = self.reg_matricula.get()
-        nombre = self.reg_nombre.get()
-        correo = self.reg_correo.get()
-        contraseña = self.reg_contrasena.get()
-        if not (matricula and nombre and correo and contraseña):
-            messagebox.showwarning("Campos vacíos", "Completa todos los campos.")
-            return
-        try:
-            Estudiantes.ingresarEstudiante(matricula, nombre, correo, contraseña)
-            messagebox.showinfo("Éxito", "Registro exitoso. Ahora puedes iniciar sesión.")
-            self.mostrar_login()
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+    def __init__(self):
 
-    # ====== Iniciar sesión en la aplicación ======
+        self.A_P = "#3B05C4"
+        self.A_P2 = "#3352F3"
+        self.A_P3 = "#687EF4"
+        self.A_P4 = "#A1AFF7"
+        self.B_A = "#F4F5FE"
 
-    def iniciar_sesion(self):
-        matricula = self.login_matricula.get()
-        correo = self.login_correo.get()
-        contraseña = self.login_contraseña.get()
+color = Colores()
+#Creando la clase para organizar la navegacion en la pagina
 
-        if not (matricula and correo and contraseña):
-            messagebox.showwarning("Campos vacíos", "Completa todos los campos.")
-            return
-        try:
-            conexion = CConexion.ConexionBaseDeDatos()
-            if conexion:
-                cursor = conexion.cursor()
-                cursor.execute("SELECT * FROM Estudiante WHERE matricula=%s AND correo=%s AND contraseña=%s",
-                               (matricula, correo, contraseña))
-                resultado = cursor.fetchone()
-                conexion.close()
-                if resultado:
-                    self.root.destroy()
-                    nueva_ventana = tk.Tk()
-                    VentanaPrincipal(nueva_ventana, matricula)
-                    nueva_ventana.mainloop()
-                else:
-                    messagebox.showerror("Error", "Credenciales incorrectas.")
-            else:
-                messagebox.showerror("Error", "No se pudo conectar a la base de datos.")
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+#Cambio = Navegacion()
+
+#def Crear_Ventana(Ventana):
+
+    #Ventana.title("Estudio-VLS")
+    #Ventana.configure(bg=color.B_A)
+    #Ventana.geometry("1200x700")       
+
+# =======================
+# VENTANA 1 - Registro
+# =======================
+
+ 
+Inicio = tk.Tk()
+Inicio.title("Estudio-VLS")
+Inicio.configure(bg=color.B_A)
+Inicio.geometry("1200x700")
+
+#Crear_Ventana(Inicio)
+
+def Principal():
+
+    Cambio_Ventana (Inicio,Principal)
+
+F_Der = tk.Frame(Inicio, bg= color.A_P3, width=300)
+F_Izq= tk.Frame(Inicio, bg= color.A_P3, width=300)
+F_Sup = tk.Frame(Inicio, bg= color.A_P, width=700, height=50)
+
+F_Der.pack(fill=tk.Y, side=tk.RIGHT, expand= True)
+F_Izq.pack(fill=tk.Y, side=tk.LEFT, expand= True)
+F_Sup.pack(fill=tk.X, side= tk.TOP)
+
+F_formulario = tk.Frame(Inicio, bg=color.B_A)
+F_formulario.pack(expand=True)
+#Etiquetas y entradas
+E_usuario = tk.Label(F_formulario,text="Nombre de Usuario", font=("Roboto",13), fg="black")
+E_usuario.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+
+EN_usuario = tk.Entry(F_formulario,width=30)
+EN_usuario.grid(row=0, column=1, padx=10, pady=5)
+
+E_correo = tk.Label(F_formulario,text="Correo electronico", font=("Roboto",13), fg="black")
+E_correo.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+
+EN_correo = tk.Entry(F_formulario,width=30)
+EN_correo.grid(row=1, column=1, padx=10, pady=5)
+
+E_clave = tk.Label(F_formulario,text="Contraseña", font=("Roboto",13), fg="black")
+E_clave.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+
+EN_clave = tk.Entry(F_formulario,width=30)
+EN_clave.grid(row=2, column=1, padx=10, pady=5)
+
+E_matricula = tk.Label(F_formulario,text="Matricula", font=("Roboto",13), fg="black")
+E_matricula.grid(row=3, column=0, padx=10, pady=5, sticky="e")
+
+EN_matricula = tk.Entry(F_formulario,width=30)
+EN_matricula.grid(row=3, column=1, padx=10, pady=5)
 
 
-# ====== VENTANA PRINCIPAL ======
+#Funcion para guardar datos en la base de datos
+def guardar_datos():
+    matricula = EN_matricula.get()  # Obtener el nombre de usuario
+    nombre = EN_usuario.get()
+    correo = EN_correo.get()
+    clave = EN_clave.get()
 
-class VentanaPrincipal:
-    def __init__(self, root, matricula):
-        self.root = root
-        self.matricula = matricula
-        self.root.title("Scripted Networks - Pantalla Principal")
-        self.root.geometry("1750x1150")
-        self.root.configure(bg="#A5B4FC")
+    # Conexión a la base de datos SQLite
+    # Guardar en la base de datos
+    conexionBD = sql.connect("Estudiante")
+    cursor = conexionBD.cursor()
 
-        encabezado = tk.Frame(self.root, bg="#003CFF", height=80)
-        encabezado.pack(fill="x")
+    cursor.execute(f"INSERT INTO Estudiante (matricula,nombre, correo, contraseña) VALUES ('{matricula}', '{nombre}', '{correo}','{clave}')")
 
-        icono_menu = tk.Label(encabezado, text="☰", font=("Arial", 22), bg="#003CFF", fg="white")
-        icono_menu.place(x=15, y=20)
+    conexionBD.commit()
+    conexionBD.close()
 
-        perfil_frame = tk.Frame(encabezado, bg="#003CFF")
-        perfil_frame.pack(side="right", padx=20)
-        editar_label = tk.Label(perfil_frame, text="Editar Perfil", font=("Arial", 9, "bold"),
-                        bg="#003CFF", fg="white", cursor="hand2")
-        editar_label.pack()
-        editar_label.bind("<Button-1>", self.abrir_editar_perfil)
 
-        mensaje = tk.Label(self.root, text="¡Bienvenido!\nNos alegra tenerte aquí.\n"
-            "Esta aplicación ha sido diseñada para ayudarte a aprender, practicar\n"
-            "y dominar los conceptos fundamentales de redes inteligentes,\n"
-            "combinando teoría con actividades prácticas e interactivas.",
-            font=("Georgia", 11), bg="#A5B4FC", justify="center")
-        mensaje.pack(pady=15)
+#messagebox.showinfo("Datos guardados correctamente")
+#image_Usu = Img.open("Usuario.jpg")
+#Variable(caja de texto).set("Abigaíl")
+#boton para pasar a la segunda ventana
+boton_guardar = tk.Button(F_formulario,command= lambda:[guardar_datos(),Principal], text="Registarse", font=("Roboto", 15), bg= color.A_P, fg= color.B_A, width=10, height=2)
+boton_guardar.grid(row=4, column=0, columnspan=2, pady=30)
 
-        # Crear la sección de ejercicios
-        self.crear_seccion(
-            titulo="Ejercicios",
-            descripcion="En este apartado podrás encontrar diversos\n"
-                        "ejercicios de subnetting para practicar.",
-            boton_text="Ir a Ejercicios",
-            comando=self.abrir_ejercicios
-        )
+# ====================================
+# VENTANA 2 - Selección de Ejercicios 
+# ====================================
 
-        # Crear la sección de quizzes
-        self.crear_seccion(
-            titulo="Quizzes",
-            descripcion="Aquí podrás responder preguntas rápidas\n"
-                        "para evaluar tus conocimientos.",
-            boton_text="Ir a Quizzes",
-            comando=lambda: messagebox.showinfo("Quizzes", "Sección de Quizzes aún no implementada.")
-        )
+Principal = tk.Toplevel(Inicio)
+Principal.title("Estudio-VLS")
+Principal.configure(bg=color.B_A)
+Principal.geometry("1200x700")
 
-    def crear_seccion(self, titulo, descripcion, boton_text, comando):
-        contenedor = tk.Frame(self.root, bg="#A5B4FC", bd=1, relief="solid")
-        contenedor.pack(pady=8, padx=15, fill="x")
+#Crear_Ventana(Principal)
 
-        icono = tk.Label(contenedor, text=titulo, bg="#003CFF", fg="white",
-                         font=("Georgia", 13, "italic"), width=12, height=4)
-        icono.pack(side="left", padx=20)
+# ====================================
+# FUNCIONES DE NAVEGACIÓN - Ventana 2
+# ====================================
 
-        contenido = tk.Frame(contenedor, bg="#A5B4FC")
-        contenido.pack(side="left", pady=10)
-
-        tk.Label(contenido, text="¿Qué encontrarás?", font=("Arial", 11, "bold"),
-                 bg="#A5B4FC").pack(anchor="w")
-        tk.Label(contenido, text=descripcion, font=("Arial", 10),
-                 bg="#A5B4FC", justify="left").pack(anchor="w")
-
-        tk.Button(contenido, text=boton_text, command=comando,
-                  bg="#3B82F6", fg="white", width=20).pack(pady=5)
-
-    def abrir_ejercicios(self):
-        for widget in self.root.winfo_children():
-            widget.destroy()
-        VentanaEjercicios(self.root, self.volver_a_principal)
-
-    def volver_a_principal(self):
-        for widget in self.root.winfo_children():
-            widget.destroy()
-        VentanaPrincipal(self.root, self.matricula)
-        
-    def abrir_editar_perfil(self, event=None):
-        self.root.destroy()
-        editar_root = tk.Tk()
-        EditarPerfil(editar_root, self.matricula)
-        editar_root.mainloop()
-
-# ====== EDITAR PERFIL ======
-
-class EditarPerfil:
-    def __init__(self, root, matricula):
-        self.root = root
-        self.matricula = matricula
-        self.root.title("Scripted Networks - Editar Perfil")
-        self.root.geometry("1750x1150")
-        self.root.configure(bg="#A6B5FF") 
-
-        # ======= ENCABEZADO AZUL =======
-
-        header = tk.Frame(self.root, bg="#0033FF", height=80)
-        header.pack(fill="x")
-
-        # Botón regresar 
-        
-        btn_volver = tk.Button(header, text="←", bg="#0033FF", fg="white",
-                               font=("Arial", 20), bd=0, activebackground="#0033FF",
-                               cursor="hand2", command=self.volver_a_principal)
-        btn_volver.place(x=10, y=20)
-
-        # Texto "Perfil" centrado
-
-        tk.Label(header, text="Perfil", bg="#0033FF", fg="white",
-                 font=("Georgia", 20)).pack(pady=20)
-
-        # ======= ICONO DE USUARIO =======
-
-        canvas = tk.Canvas(self.root, width=150, height=150, bg="#A6B5FF", highlightthickness=0)
-        canvas.pack(pady=20)
-
-        # Dibujar un icono de usuario 
-        # Cabeza (círculo)
-
-        canvas.create_oval(40, 20, 110, 90, fill="black")
-
-        # Cuerpo (óvalo)
-
-        canvas.create_oval(25, 80, 125, 140, fill="black")
-
+def vlsm():
     
-        self.nombre_var = tk.StringVar()
-        self.correo_var = tk.StringVar()
+    Cambio_Ventana(Principal, Ejer_VLSM)
 
-        # ======= CAMPOS DE ENTRADA =======
+def tablasDirec():
+   
+   Cambio_Ventana(Principal, Ejer_TablasDirec)
 
-        self.crear_campo("Nombre", self.nombre_var)
-        self.crear_campo("Correo Electronico", self.correo_var)
+def Config():
 
-        # ======= BOTÓN GUARDAR =======
+   Cambio_Ventana(Principal, Ajustes)
 
-        tk.Button(self.root, text="GUARDAR CAMBIOS", bg="#3A4DF5", fg="white",
-                  font=("Arial", 12, "bold"), relief="flat", width=25, height=2,
-                  cursor="hand2", command=self.actualizar_datos).pack(pady=40)
+def configRouter():
 
-        # Cargar datos del estudiante
-        
-        self.cargar_datos_estudiante()
-
-    # Crea campos de entrada
-
-    def crear_campo(self, etiqueta, variable, editable=True):
-        frame = tk.Frame(self.root, bg="#A6B5FF")
-        frame.pack(pady=10)
-        tk.Label(frame, text=etiqueta, bg="#A6B5FF", font=("Arial", 10, "bold")).pack(anchor="w", padx=10)
-        entry = tk.Entry(frame, textvariable=variable, width=40, font=("Arial", 12), relief="flat")
-        entry.pack(ipady=8, padx=10, pady=5)
-        if not editable:
-            entry.configure(state='readonly')
-
-    # Cargar datos desde la base de datos
-
-    def cargar_datos_estudiante(self):
-        conexion = CConexion.ConexionBaseDeDatos()
-        if conexion:
-            cursor = conexion.cursor()
-            cursor.execute("SELECT nombre, correo FROM Estudiante WHERE matricula = %s", (self.matricula,))
-            resultado = cursor.fetchone()
-            if resultado:
-                self.nombre_var.set(resultado[0])
-                self.correo_var.set(resultado[1])
-            conexion.close()
-
-    # Guardar cambios
-
-    def actualizar_datos(self):
-        nueva_nombre = self.nombre_var.get()
-        nuevo_correo = self.correo_var.get()
-
-        if not nueva_nombre or not nuevo_correo:
-            messagebox.showwarning("Campos Vacíos", "Todos los campos deben estar llenos.")
-            return
-
-        conexion = CConexion.ConexionBaseDeDatos()
-        if conexion:
-            try:
-                cursor = conexion.cursor()
-                cursor.execute("UPDATE Estudiante SET nombre=%s, correo=%s WHERE matricula=%s",
-                               (nueva_nombre, nuevo_correo, self.matricula))
-                conexion.commit()
-                messagebox.showinfo("Éxito", "Datos actualizados correctamente.")
-                self.root.destroy()
-                nueva_root = tk.Tk()
-                VentanaPrincipal(nueva_root, self.matricula)
-                nueva_root.mainloop()
-            except Exception as e:
-                messagebox.showerror("Error", str(e))
-            finally:
-                conexion.close()
-
-    # Volver a ventana principal
-    
-    def volver_a_principal(self):
-        self.root.destroy()
-        nueva_root = tk.Tk()
-        VentanaPrincipal(nueva_root, self.matricula)
-        nueva_root.mainloop()
+    Cambio_Ventana(Principal, Ejer_ConfiRouter)
 
 
-# ====== Ejercicios ======
+Barra_superio = tk.Frame(Principal, bg= color.A_P , width=700, height=80)
+Barra_superio.pack(fill=tk.X)
 
-class VentanaEjercicios:
-    def __init__(self, root, volver_callback):
-        self.root = root
-        self.volver_callback = volver_callback
-        self.root.title("Scripted Networks - Ejercicios")
-        self.root.configure(bg="#A5B4FC")
+E_Titulo= tk.Label(Barra_superio, text="EJERCICIOS", font=("Times New Roman", 30), bg=color.B_A, fg="black")
+E_Titulo.grid(row=0, column=0, columnspan=2, pady=20)
 
-        # Barra superior 
-        
-        encabezado = tk.Frame(self.root, bg="#003CFF", height=60)
-        encabezado.pack(fill="x")
+Ajustes = tk.Button(Barra_superio, text="Ajustes", font=("Roboto", 12), bg= color.A_P3, fg="white", width=10, height=2,command= Config)
+Ajustes.grid(row=4, column=0, columnspan=2, pady=20)
 
-        # Botón menú
+"""Barra_superio = tk.Frame(Principal, bg= color.B_A, width=700, height=150)
+Barra_superio.pack(fill=tk.X)"""
 
-        boton_menu = tk.Label(encabezado, text="☰", font=("Arial", 22), bg="#003CFF", fg="white", cursor="hand2")
-        boton_menu.place(x=10, y=10)
+Etiqueta1 = tk.Frame(Principal, bg= color.B_A)
+Etiqueta1.pack(expand=True)
 
-        # Título centrado
+#Etiquetas y botones
+E_VLSM = tk.Label(Etiqueta1, text="VLSM", font=("Roboto", 30), bg= color.B_A, fg="black")
+E_VLSM.grid(row=1, column=0, padx=20, pady=10, sticky="e")
 
-        titulo = tk.Label(encabezado, text="Ejercicios", font=("Arial", 18, "bold"), bg="#003CFF", fg="white")
-        titulo.pack(pady=10)
+B_EjerVLSM = tk.Button(Etiqueta1,text="Abrir", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= vlsm)
+B_EjerVLSM.grid(row=1, column=1, padx=10, pady=10)
 
-        # Contenedor principal
+#2
+E_TablasDirec = tk.Label(Etiqueta1, text="Tablas de direccionamiento", font=("Roboto", 30), bg= color.B_A, fg="black")
+E_TablasDirec.grid(row=2, column=0, padx=20, pady=10, sticky="e")
 
-        contenedor = tk.Frame(self.root, bg="#A5B4FC")
-        contenedor.pack(expand=True, fill="both", pady=20)
+B_EjerTablasDirec = tk.Button(Etiqueta1,text="Abrir", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= tablasDirec)
+E_TablasDirec.grid(row=2, column=1, padx=10, pady=10)
 
-        # Lista de botones de ejercicios
+#3
+E_ConfiRouter = tk.Label(Etiqueta1, text="Configuración de un Router", font=("Roboto", 30), bg= color.B_A, fg="black")
+E_ConfiRouter.grid(row=3, column=0, padx=20, pady=10, sticky="e")
 
-        ejercicios = ["Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"]
+B_EjerConfigRouter = tk.Button(Etiqueta1,text="Abrir", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= configRouter)
+E_ConfiRouter.grid(row=3, column=1, padx=10, pady=10)
 
-        for i, nombre in enumerate(ejercicios):
-            frame_item = tk.Frame(contenedor, bg="#A5B4FC")
-            frame_item.pack(fill="x", pady=5)
 
-            boton = tk.Button(frame_item, text=nombre, font=("Arial", 14),
-                              bg="#3B4EFF", fg="white", activebackground="#0024AA",
-                              relief="flat", padx=10, pady=5, width=15,
-                              command=lambda n=nombre: self.abrir_ejercicio(n))
-            boton.pack(pady=5)
 
-            if i < len(ejercicios) - 1:
+# ======================================
+# VENTANA Ajustes - Apartado de ajustes 
+# ======================================
 
-                # Línea divisoria
-                
-                separator = tk.Frame(contenedor, height=1, bg="black")
-                separator.pack(fill="x", pady=2)
+Ajustes = tk.Toplevel(Principal)
+Ajustes.title("Estudio-VLS")
+Ajustes.configure(bg=color.B_A)
+Ajustes.geometry("1200x700")
 
-          # Boton Volver a ventana principal
+#Crear_Ventana(Ajustes)
+ventana= Ajustes
+def principal(ventana):
+    Cambio_Ventana(ventana,Principal)
 
-        tk.Button(self.root, text="Volver a pantalla principal", bg="#3B82F6", fg="white", width=15,
-                  command=self.volver_callback).pack(pady=20)
-        
-    # Abrir ejercicio
+Barra_superio_A = tk.Frame(Ajustes, bg= color.A_P, width=700, height=80)
+Barra_superio_A.pack(fill=tk.X,side=tk.TOP)
 
-    def abrir_ejercicio(self, nombre):
-        messagebox.showinfo("Ejercicio", f"Abrir {nombre}")
+F_Ajustes = tk.Frame(Ajustes, bg= color.B_A)
+F_Ajustes.pack(expand=True)
 
-# ====== INICIO DE LA APLICACIÓN ======
+#Etiquetas y Entradas
+E_usuario = tk.Label(F_Ajustes, text="Cambiar Nombre ", font=("Roboto",15), bg= color.A_P4, fg="white")
+E_usuario.pack(pady=5, padx=200)
 
-root = tk.Tk()
-app = Aplicacion(root)
-root.mainloop()
+EN_usuario = tk.Entry(F_Ajustes,width=30,font=(18))
+EN_usuario.pack(pady=5, padx=20)
+
+E_correo = tk.Label(F_Ajustes, text="Cambiar Correo", font=("Roboto",15), bg= color.A_P4, fg="white")
+E_correo.pack(pady=5, padx=10)
+
+EN_correo = tk.Entry(F_Ajustes,width=30,font=(18))
+EN_correo.pack(pady=5, padx=20)
+
+
+B_Ajustes = tk.Button(F_Ajustes,text="Guardar", font=("Roboto", 15), bg= color.A_P, fg="white",width=10, height=2,command= principal(ventana))
+B_Ajustes.pack(pady=30)
+
+# ============================
+# VENTANA 3 - Ejercicio VLSM
+# ============================
+
+Ejer_VLSM =tk.Toplevel(Principal)
+Ejer_VLSM.title("Estudio-VLS")
+Ejer_VLSM.configure(bg=color.B_A)
+Ejer_VLSM.geometry("1200x700")
+
+#Crear_Ventana(Ejer_VLSM)
+
+# Barra superior
+Barra_superior3 = tk.Frame(Ejer_VLSM, bg= color.A_P, height=20)
+Barra_superior3.grid(row=0, column=1, padx=10)
+
+B_Regresar = tk.Button(Barra_superior3, text="Regresar", font=("Roboto", 12), bg= color.A_P3, fg="white", width=10, height=2, command= principal(Ejer_VLSM))
+B_Regresar.grid(row=0, column=0, pady=5)
+
+# Título centrado
+E_Titulo = tk.Label(Barra_superior3, text="EJERCICIO VLSM", font=("Times New Roman", 30), bg= color.A_P, fg="black")
+E_Titulo.grid(row=0, column=4,padx= 300)
+
+#Etiqueta
+#Etiqueta1_V3 = tk.Frame(ventana3, bg="#FFFFFF")
+#Etiqueta1_V3.pack(pady=40, fill=tk.X, padx=10)
+
+# ============================
+# VENTANA 4 - Tablas de direccionamiento
+# ============================
+
+Ejer_TablasDirec= tk.Toplevel(Principal)
+Ejer_TablasDirec.title("Estudio-VLS")
+Ejer_TablasDirec.configure(bg=color.B_A)
+Ejer_TablasDirec.geometry("1200x700")
+
+#Crear_Ventana(Ejer_TablasDirec)
+
+# Barra superior
+Barra_superior4 = tk.Frame(Ejer_TablasDirec, bg= color.A_P, height=70)
+Barra_superior4.pack(fill=tk.X)
+
+# Título centrado
+E_Titulo = tk.Label(Barra_superior4, text="Tablas de direccionamiento", font=("Times New Roman", 39), bg= color.A_P, fg="black")
+E_Titulo.pack(pady=20)
+
+# Botón a la izquierda
+B_Regresar = tk.Button(Barra_superior4, text="Regresar", font=("Roboto", 12), bg=color.A_P3, fg="white", width=10, height=2, command= principal(Ejer_TablasDirec))
+B_Regresar.pack(pady=10)
+
+# ============================
+# VENTANA 5 - Configuración de Router
+# ============================
+
+Ejer_ConfiRouter = tk.Toplevel(Principal)
+Ejer_ConfiRouter.title("Estudio-VLS")
+Ejer_ConfiRouter.configure(bg=color.B_A)
+Ejer_ConfiRouter.geometry("1200x700")
+
+#Crear_Ventana(Ejer_ConfiRouter)
+
+# Barra superior
+Barra_superior5= tk.Frame(Ejer_ConfiRouter, bg= color.A_P, height=70)
+Barra_superior5.pack(fill=tk.X)
+
+B_Regresar = tk.Button(Barra_superior5, text="Regresar", font=("Roboto", 12), bg= color.A_P3, fg="white", width=10, height=2, command= principal(Ejer_ConfiRouter))
+B_Regresar.pack(pady=10)
+
+E_Titulo = tk.Label(Barra_superior5, text="Configuración de un Router", font=("Times New Roman", 39), bg= color.A_P, fg="black")
+E_Titulo.pack(pady=20)
+
+
+#Etiqueta1_V5 = tk.Frame(ventana5, bg="#FFFFFF")
+#Etiqueta1_V5.pack(pady=40, fill=tk.X, padx=10)
+
+# iniciar el bucle de eventos
+Inicio.mainloop()
